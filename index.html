@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SpeakOn - Ruang Aman Siswa</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
+}
+
+header {
+    background: #111827;
+    color: white;
+    padding: 20px;
+}
+
+.header-content {
+    max-width: 850px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.admin {
+    color: white;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.container {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+}
+
+h1 {
+    margin-top: 0;
+}
+
+.info {
+    background: #eef2ff;
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 170px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #111827;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #374151;
+}
+
+.success {
+    display: none;
+    margin-top: 15px;
+    padding: 14px;
+    background: #dcfce7;
+    color: #166534;
+    border-radius: 9px;
+}
+
+.error {
+    display: none;
+    margin-top: 15px;
+    padding: 14px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 9px;
+}
+
+footer {
+    text-align: center;
+    color: #6b7280;
+    padding: 25px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="header-content">
+
+        <div>
+            <div class="logo">SPEAKON</div>
+            <div>Ruang Aman untuk Cerita & Aspirasi Siswa</div>
+        </div>
+
+        <a href="admin.html" class="admin">
+            Login Admin
+        </a>
+
+    </div>
+</header>
+
+<div class="container">
+
+    <div class="card">
+
+        <h1>Tempat untuk Bercerita</h1>
+
+        <p>
+            Ceritakan masalah, pengalaman, aspirasi, kritik,
+            atau saran yang ingin kamu sampaikan.
+        </p>
+
+        <div class="info">
+            🔒 <b>Anonim</b><br>
+            Kamu tidak perlu menuliskan nama, nomor HP,
+            email, atau kelas.
+        </div>
+
+        <form id="speakOnForm">
+
+            <label for="topic">Topik</label>
+
+            <select id="topic" required>
+                <option value="">Pilih topik</option>
+                <option value="Masalah pribadi">Masalah pribadi</option>
+                <option value="Belajar dan tugas">Belajar dan tugas</option>
+                <option value="Pertemanan">Pertemanan</option>
+                <option value="Lingkungan sekolah">Lingkungan sekolah</option>
+                <option value="Aspirasi dan saran">Aspirasi dan saran</option>
+                <option value="Lainnya">Lainnya</option>
+            </select>
+
+            <label for="adminChoice">
+                Pilih Admin yang ingin menjawab
+            </label>
+
+            <select id="adminChoice" required>
+                <option value="">Pilih Admin 1, 2, atau 3</option>
+                <option value="Admin 1">Admin 1</option>
+                <option value="Admin 2">Admin 2</option>
+                <option value="Admin 3">Admin 3</option>
+            </select>
+
+            <label for="message">Cerita / Pesan</label>
+
+            <textarea
+                id="message"
+                maxlength="3000"
+                placeholder="Tulis ceritamu di sini..."
+                required></textarea>
+
+            <button type="submit">
+                Kirim Secara Anonim
+            </button>
+
+            <div id="success" class="success">
+                ✅ Pesan berhasil dikirim secara anonim.
+            </div>
+
+            <div id="error" class="error">
+                ❌ Pesan gagal dikirim. Silakan coba lagi.
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<footer>
+    SpeakOn © 2026
+</footer>
+
+<script type="module">
+
+import { db } from "./firebase.js";
+
+import {
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+const form = document.getElementById("speakOnForm");
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const topic =
+        document.getElementById("topic").value;
+
+    const admin =
+        document.getElementById("adminChoice").value;
+
+    const message =
+        document.getElementById("message").value.trim();
+
+    const success =
+        document.getElementById("success");
+
+    const error =
+        document.getElementById("error");
+
+
+    if (!topic || !admin || !message) {
+        alert("Lengkapi semua bagian terlebih dahulu.");
+        return;
+    }
+
+
+    try {
+
+        await addDoc(collection(db, "stories"), {
+
+            topic: topic,
+
+            admin: admin,
+
+            message: message,
+
+            reply: "",
+
+            status: "Menunggu",
+
+            createdAt: serverTimestamp()
+
+        });
+
+
+        form.reset();
+
+        error.style.display = "none";
+
+        success.style.display = "block";
+
+
+    } catch (err) {
+
+        console.error(err);
+
+        success.style.display = "none";
+
+        error.style.display = "block";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>SpeakOn - Admin</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #0b0b0f;
+    color: white;
+}
+
+header {
+    background: #111116;
+    border-bottom: 1px solid #292932;
+    padding: 18px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #4da3ff;
+}
+
+.logout-btn {
+    display: none;
+    background: #ef4444;
+    color: white;
+    border: none;
+    padding: 9px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1100px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+.login-box {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #15151c;
+    border: 1px solid #292932;
+    border-radius: 15px;
+    padding: 35px;
+    text-align: center;
+}
+
+.login-box h1 {
+    margin-bottom: 10px;
+}
+
+.login-box p {
+    color: #aaa;
+    line-height: 1.5;
+}
+
+.google-btn {
+    margin-top: 20px;
+    background: white;
+    color: #111;
+    border: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.google-btn:hover {
+    background: #ddd;
+}
+
+.google-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error {
+    display: none;
+    margin-top: 15px;
+    padding: 12px;
+    background: #451a1a;
+    color: #fca5a5;
+    border-radius: 8px;
+}
+
+.dashboard {
+    display: none;
+}
+
+.welcome {
+    margin-bottom: 25px;
+}
+
+.welcome h1 {
+    margin-bottom: 8px;
+}
+
+.welcome p {
+    color: #aaa;
+}
+
+.admin-info {
+    background: #15151c;
+    border: 1px solid #292932;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #ccc;
+}
+
+.message {
+    background: #15151c;
+    border: 1px solid #292932;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.anonymous {
+    color: #4da3ff;
+    font-weight: bold;
+}
+
+.time {
+    color: #777;
+    font-size: 13px;
+}
+
+.topic {
+    display: inline-block;
+    background: #202029;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.message-text {
+    color: #ddd;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    margin-bottom: 15px;
+}
+
+.target {
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.reply-area {
+    border-top: 1px solid #292932;
+    padding-top: 15px;
+}
+
+.reply-area textarea {
+    width: 100%;
+    min-height: 90px;
+    resize: vertical;
+    background: #0d0d12;
+    color: white;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 14px;
+}
+
+.reply-btn {
+    margin-top: 10px;
+    background: #4da3ff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.reply-btn:hover {
+    background: #3186d8;
+}
+
+.reply-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.existing-reply {
+    margin-top: 15px;
+    padding: 15px;
+    background: #102a1b;
+    border-radius: 8px;
+    color: #d1fae5;
+}
+
+.empty {
+    text-align: center;
+    color: #888;
+    padding: 40px;
+    background: #15151c;
+    border-radius: 15px;
+}
+
+.loading {
+    text-align: center;
+    color: #aaa;
+    padding: 30px;
+}
+
+@media (max-width: 600px) {
+    header {
+        padding: 15px;
+    }
+
+    .logo {
+        font-size: 20px;
+    }
+
+    .container {
+        margin: 20px auto;
+        padding: 0 12px;
+    }
+
+    .message-header {
+        flex-direction: column;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        SPEAK<span>ON</span> ADMIN
+    </div>
+
+    <button id="logoutBtn" class="logout-btn">
+        Keluar
+    </button>
+
+</header>
+
+<div class="container">
+
+    <!-- LOGIN -->
+
+    <div id="loginBox" class="login-box">
+
+        <h1>🔐 Login Admin</h1>
+
+        <p>
+            Masuk menggunakan akun Google admin
+            untuk mengelola cerita di SpeakOn.
+        </p>
+
+        <button id="googleLogin" class="google-btn">
+            🔵 Masuk dengan Google
+        </button>
+
+        <div id="loginError" class="error"></div>
+
+    </div>
+
+    <!-- DASHBOARD -->
+
+    <div id="dashboard" class="dashboard">
+
+        <div class="welcome">
+
+            <h1>Dashboard SpeakOn</h1>
+
+            <p>
+                Kelola cerita dan berikan tanggapan
+                kepada pencerita secara aman.
+            </p>
+
+        </div>
+
+        <div class="admin-info">
+
+            👤 Login sebagai:
+            <b id="adminEmail"></b>
+
+            <br>
+
+            🛡️ <span id="adminRole"></span>
+
+        </div>
+
+        <div id="messages">
+
+            <div class="loading">
+                Memuat cerita...
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+import {
+    GoogleAuthProvider,
+    signInWithPopup,
+    onAuthStateChanged,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+import {
+    collection,
+    query,
+    orderBy,
+    onSnapshot,
+    doc,
+    updateDoc
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+// ==================================================
+// DAFTAR ADMIN
+// ==================================================
+// Untuk sementara hanya 1 akun.
+// Nanti Admin 2 dan Admin 3 bisa ditambahkan.
+
+const ADMIN_EMAILS = {
+    "mqamqaoke@gmail.com": "Admin 1"
+};
+
+
+// ==================================================
+// ELEMENT WEBSITE
+// ==================================================
+
+const loginBox = document.getElementById("loginBox");
+const dashboard = document.getElementById("dashboard");
+const googleLogin = document.getElementById("googleLogin");
+const logoutBtn = document.getElementById("logoutBtn");
+const loginError = document.getElementById("loginError");
+const adminEmail = document.getElementById("adminEmail");
+const adminRole = document.getElementById("adminRole");
+const messages = document.getElementById("messages");
+
+
+// Menyimpan fungsi unsubscribe Firestore
+let unsubscribeStories = null;
+
+
+// ==================================================
+// LOGIN GOOGLE
+// ==================================================
+
+googleLogin.addEventListener("click", async () => {
+
+    loginError.style.display = "none";
+    googleLogin.disabled = true;
+    googleLogin.textContent = "Membuka Google...";
+
+    const provider = new GoogleAuthProvider();
+
+    try {
+
+        await signInWithPopup(auth, provider);
+
+    } catch (error) {
+
+        console.error("Login error:", error);
+
+        loginError.textContent =
+            "Login gagal. Silakan coba lagi.";
+
+        loginError.style.display = "block";
+
+    } finally {
+
+        googleLogin.disabled = false;
+        googleLogin.textContent = "🔵 Masuk dengan Google";
+
+    }
+
+});
+
+
+// ==================================================
+// CEK LOGIN
+// ==================================================
+
+onAuthStateChanged(auth, (user) => {
+
+    // Belum login
+    if (!user) {
+
+        loginBox.style.display = "block";
+        dashboard.style.display = "none";
+        logoutBtn.style.display = "none";
+
+        if (unsubscribeStories) {
+            unsubscribeStories();
+            unsubscribeStories = null;
+        }
+
+        return;
+    }
+
+
+    // Pastikan email tersedia
+    const email =
+        (user.email || "").toLowerCase();
+
+
+    // Cek apakah email termasuk admin
+    if (!ADMIN_EMAILS[email]) {
+
+        alert(
+            "Akun ini tidak terdaftar sebagai admin SpeakOn."
+        );
+
+        signOut(auth);
+
+        return;
+    }
+
+
+    // ==================================================
+    // LOGIN ADMIN BERHASIL
+    // ==================================================
+
+    loginBox.style.display = "none";
+    dashboard.style.display = "block";
+    logoutBtn.style.display = "block";
+
+    adminEmail.textContent = user.email;
+    adminRole.textContent = ADMIN_EMAILS[email];
+
+    loadMessages();
+
+});
+
+
+// ==================================================
+// LOGOUT
+// ==================================================
+
+logoutBtn.addEventListener("click", async () => {
+
+    try {
+
+        await signOut(auth);
+
+    } catch (error) {
+
+        console.error("Logout error:", error);
+
+    }
+
+});
+
+
+// ==================================================
+// MEMUAT CERITA DARI FIRESTORE
+// ==================================================
+
+function loadMessages() {
+
+    // Hentikan listener sebelumnya
+    if (unsubscribeStories) {
+        unsubscribeStories();
+    }
+
+    const storiesRef =
+        collection(db, "stories");
+
+    const q =
+        query(
+            storiesRef,
+            orderBy("createdAt", "desc")
+        );
+
+
+    unsubscribeStories = onSnapshot(
+        q,
+        (snapshot) => {
+
+            if (snapshot.empty) {
+
+                messages.innerHTML = `
+                    <div class="empty">
+                        📭 Belum ada cerita masuk.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            messages.innerHTML = "";
+
+
+            snapshot.forEach((storyDoc) => {
+
+                const data =
+                    storyDoc.data();
+
+                const id =
+                    storyDoc.id;
+
+
+                let date =
+                    "Waktu belum tersedia";
+
+                if (data.createdAt) {
+
+                    try {
+
+                        date =
+                            data.createdAt
+                                .toDate()
+                                .toLocaleString("id-ID");
+
+                    } catch (error) {
+
+                        console.error(
+                            "Gagal membaca waktu:",
+                            error
+                        );
+
+                    }
+
+                }
+
+
+                const card =
+                    document.createElement("div");
+
+                card.className = "message";
+
+
+                card.innerHTML = `
+
+                    <div class="message-header">
+
+                        <span class="anonymous">
+                            👤 Pencerita Anonim
+                        </span>
+
+                        <span class="time">
+                            ${escapeHTML(date)}
+                        </span>
+
+                    </div>
+
+                    <div class="topic">
+                        ${escapeHTML(
+                            data.topic || "Tanpa topik"
+                        )}
+                    </div>
+
+                    <div class="target">
+                        🎯 Ditujukan kepada:
+                        <b>
+                            ${escapeHTML(
+                                data.admin || "Belum dipilih"
+                            )}
+                        </b>
+                    </div>
+
+                    <div class="message-text">
+                        ${escapeHTML(
+                            data.message || ""
+                        )}
+                    </div>
+
+                    ${
+                        data.reply
+                        ?
+                        `
+                        <div class="existing-reply">
+
+                            <b>💬 Balasan Admin:</b>
+
+                            <br><br>
+
+                            ${escapeHTML(data.reply)}
+
+                        </div>
+                        `
+                        :
+                        `
+                        <div class="reply-area">
+
+                            <textarea
+                                id="reply-${escapeHTML(id)}"
+                                placeholder="Tulis balasan untuk pencerita..."
+                            ></textarea>
+
+                            <button
+                                class="reply-btn"
+                                data-id="${escapeHTML(id)}"
+                            >
+                                Kirim Balasan
+                            </button>
+
+                        </div>
+                        `
+                    }
+
+                `;
+
+
+                messages.appendChild(card);
+
+            });
+
+
+            // Pasang fungsi tombol balasan
+            document
+                .querySelectorAll(".reply-btn")
+                .forEach((button) => {
+
+                    button.addEventListener(
+                        "click",
+                        () => sendReply(button)
+                    );
+
+                });
+
+        },
+        (error) => {
+
+            console.error(
+                "Firestore error:",
+                error
+            );
+
+            messages.innerHTML = `
+                <div class="error" style="display:block;">
+                    ❌ Gagal memuat cerita.
+                    <br><br>
+                    Pastikan Firestore Rules sudah dikonfigurasi.
+                </div>
+            `;
+
+        }
+    );
+
+}
+
+
+// ==================================================
+// KIRIM BALASAN
+// ==================================================
+
+async function sendReply(button) {
+
+    const id =
+        button.dataset.id;
+
+    const textarea =
+        document.getElementById(
+            "reply-" + id
+        );
+
+
+    if (!textarea) {
+        return;
+    }
+
+
+    const reply =
+        textarea.value.trim();
+
+
+    if (!reply) {
+
+        alert(
+            "Tulis balasan terlebih dahulu."
+        );
+
+        return;
+    }
+
+
+    button.disabled = true;
+    button.textContent = "Mengirim...";
+
+
+    try {
+
+        await updateDoc(
+            doc(db, "stories", id),
+            {
+                reply: reply,
+                status: "Sudah dijawab"
+            }
+        );
+
+
+        alert(
+            "Balasan berhasil dikirim."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Reply error:",
+            error
+        );
+
+        alert(
+            "Balasan gagal dikirim. Pastikan Firestore Rules sudah benar."
+        );
+
+        button.disabled = false;
+        button.textContent = "Kirim Balasan";
+
+    }
+
+}
+
+
+// ==================================================
+// MENCEGAH HTML BERBAHAYA
+// ==================================================
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(text);
+
+    return div.innerHTML;
+
+}
+
+</script>
+
+</body>
+</html>
