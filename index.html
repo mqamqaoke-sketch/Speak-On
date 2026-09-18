@@ -1,679 +1,399 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpeakOn</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SpeakOn</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f3f5f9;
-      color: #111827;
-    }
-
-    header {
-      background: #111827;
-      color: white;
-      padding: 22px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 30px;
-    }
-
-    header p {
-      margin: 7px 0 0;
-      opacity: 0.8;
-    }
-
-    .container {
-      max-width: 700px;
-      margin: 30px auto;
-      padding: 0 18px;
-    }
-
-    .card {
-      background: white;
-      border-radius: 24px;
-      padding: 28px;
-      margin-bottom: 24px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
-    }
-
-    h2 {
-      margin-top: 0;
-      font-size: 25px;
-    }
-
-    label {
-      display: block;
-      font-weight: bold;
-      margin: 18px 0 8px;
-    }
-
-    select,
-    textarea,
-    input {
-      width: 100%;
-      padding: 15px;
-      border: 1px solid #d1d5db;
-      border-radius: 14px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    textarea {
-      min-height: 180px;
-      resize: vertical;
-    }
-
-    button {
-      width: 100%;
-      border: none;
-      border-radius: 14px;
-      padding: 16px;
-      margin-top: 18px;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-      background: #111827;
-      color: white;
-    }
-
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .message {
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 14px;
-      display: none;
-      line-height: 1.5;
-    }
-
-    .success {
-      background: #ecfdf5;
-      color: #065f46;
-      border: 1px solid #a7f3d0;
-    }
-
-    .error {
-      background: #fef2f2;
-      color: #991b1b;
-      border: 1px solid #fecaca;
-    }
-
-    .code-box {
-      margin-top: 15px;
-      padding: 18px;
-      background: #f3f4f6;
-      border-radius: 15px;
-      text-align: center;
-    }
-
-    .story-code {
-      display: block;
-      font-size: 30px;
-      font-weight: bold;
-      letter-spacing: 5px;
-      margin: 10px 0;
-    }
-
-    .copy-button {
-      background: #374151;
-      margin-top: 8px;
-    }
-
-    .reply-box {
-      margin-top: 18px;
-      padding: 18px;
-      border-radius: 15px;
-      background: #f9fafb;
-      line-height: 1.6;
-    }
-
-    .status {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .admin-link {
-      text-align: center;
-      margin-top: 15px;
-    }
-
-    .admin-link a {
-      color: #374151;
-      text-decoration: none;
-      font-size: 14px;
-    }
-  </style>
+<style>
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:Arial,sans-serif;background:#0b0b0f;color:white
+}
+header{
+  padding:18px 25px;background:#111116;border-bottom:1px solid #292932;
+  display:flex;justify-content:space-between;align-items:center
+}
+.logo{font-size:25px;font-weight:bold}
+.logo span{color:#4da3ff}
+.admin-btn,.sound-btn,.submit-btn,.check-btn{
+  border:0;border-radius:8px;padding:10px 15px;cursor:pointer;font-weight:bold
+}
+.admin-btn{background:#202029;color:white}
+.sound-btn{background:#202029;color:#4da3ff;margin-bottom:15px}
+.container{max-width:700px;margin:40px auto;padding:0 20px}
+.card{
+  background:#15151c;border:1px solid #292932;border-radius:15px;
+  padding:25px;margin-bottom:20px
+}
+h1{text-align:center}
+p{color:#aaa;line-height:1.5}
+label{display:block;margin:15px 0 7px;font-weight:bold}
+select,textarea,input{
+  width:100%;background:#0d0d12;color:white;border:1px solid #333;
+  border-radius:8px;padding:12px;font-size:14px
+}
+textarea{min-height:150px;resize:vertical}
+.submit-btn{width:100%;margin-top:18px;background:#4da3ff;color:white}
+.check-btn{background:#4da3ff;color:white;margin-top:10px}
+.result{
+  margin-top:15px;padding:15px;background:#102a1b;
+  border-radius:8px;color:#d1fae5
+}
+.code{
+  font-size:24px;font-weight:bold;color:#4da3ff;
+  letter-spacing:5px;text-align:center;margin:15px
+}
+.error{
+  display:none;background:#451a1a;color:#fca5a5;
+  padding:12px;border-radius:8px;margin-top:12px
+}
+.small{font-size:13px;color:#777}
+</style>
 </head>
 
 <body>
 
 <header>
-  <h1>SPEAKON</h1>
-  <p>Bercerita tanpa takut, didengar tanpa menghakimi.</p>
+  <div class="logo">SPEAK<span>ON</span></div>
+  <button class="admin-btn"
+    onclick="location.href='admin.html'">🔐 Admin</button>
 </header>
 
 <div class="container">
 
-  <!-- KIRIM CERITA -->
   <div class="card">
-    <h2>🗣️ Ceritakan Ceritamu</h2>
-
-    <p>
-      Ceritakan apa yang ingin kamu sampaikan.
-      Kamu tetap anonim.
+    <h1>🗣️ Ceritakan di SpeakOn</h1>
+    <p style="text-align:center">
+      Tempat aman untuk menyampaikan cerita secara anonim.
     </p>
 
-    <label for="topic">Topik Cerita</label>
+    <button id="soundBtn" class="sound-btn">
+      🔔 Aktifkan Suara Notifikasi
+    </button>
 
+    <label>Topik Cerita</label>
     <select id="topic">
-      <option value="">Pilih topik</option>
       <option value="Pribadi">Pribadi</option>
+      <option value="Sekolah">Sekolah</option>
       <option value="Pertemanan">Pertemanan</option>
       <option value="Keluarga">Keluarga</option>
-      <option value="Sekolah">Sekolah</option>
       <option value="Lainnya">Lainnya</option>
     </select>
 
-    <label for="admin">Pilih Admin</label>
-
+    <label>Ditujukan kepada</label>
     <select id="admin">
-      <option value="">Pilih Admin</option>
       <option value="Admin 1">Admin 1</option>
       <option value="Admin 2">Admin 2</option>
       <option value="Admin 3">Admin 3</option>
     </select>
 
-    <label for="message">Cerita</label>
+    <label>Ceritamu</label>
+    <textarea id="message"
+      placeholder="Tulis ceritamu di sini..."></textarea>
 
-    <textarea
-      id="message"
-      placeholder="Tulis ceritamu di sini..."
-    ></textarea>
-
-    <button id="sendButton">
+    <button id="submitBtn" class="submit-btn">
       Kirim Cerita
     </button>
 
-    <div id="sendMessage" class="message"></div>
-
-    <div id="codeBox" class="code-box" style="display:none;">
-      <div>✅ Cerita berhasil dikirim!</div>
-
-      <div>Simpan kode ini untuk melihat balasan:</div>
-
-      <span id="storyCode" class="story-code"></span>
-
-      <button id="copyButton" class="copy-button">
-        📋 Salin Kode
-      </button>
-    </div>
-
+    <div id="error" class="error"></div>
   </div>
 
-
-  <!-- CEK BALASAN -->
-  <div class="card">
-
-    <h2>🔎 Cek Balasan</h2>
-
-    <p>
-      Masukkan kode cerita yang kamu dapat setelah mengirim cerita.
+  <div id="codeCard" class="card" style="display:none">
+    <h2 style="text-align:center">🔑 Kode Ceritamu</h2>
+    <p style="text-align:center">
+      Simpan kode ini untuk melihat balasan Admin.
     </p>
 
-    <label for="checkCode">
-      Kode Cerita
-    </label>
+    <div id="storyCode" class="code"></div>
 
-    <input
-      id="checkCode"
-      type="text"
-      maxlength="4"
-      placeholder="Contoh: A7K2"
-      style="text-transform: uppercase;"
-    >
-
-    <button id="checkButton">
-      Cek Cerita
-    </button>
-
-    <div id="checkMessage" class="message"></div>
-
-    <div id="replyBox" class="reply-box" style="display:none;">
-      <div id="statusText" class="status"></div>
-      <div id="replyText"></div>
+    <div id="replyResult" class="result">
+      ⏳ Menunggu balasan Admin...
     </div>
-
   </div>
 
+  <div class="card">
+    <h2>💬 Cek Balasan</h2>
 
-  <div class="admin-link">
-    <a href="admin.html">
-      Login Admin
-    </a>
+    <p>
+      Masukkan kode cerita yang kamu simpan.
+    </p>
+
+    <input id="checkCode"
+      maxlength="4"
+      placeholder="Contoh: A7K2">
+
+    <button id="checkBtn" class="check-btn">
+      Cek Balasan
+    </button>
+
+    <div id="checkResult" class="result" style="display:none"></div>
   </div>
 
 </div>
 
-
 <script type="module">
 
-  import {
-    db
-  } from "./firebase.js";
+import {db} from "./firebase.js";
 
-  import {
-    collection,
-    doc,
-    setDoc,
-    getDoc,
-    serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import {
+  doc,setDoc,getDoc,onSnapshot,serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-  // =====================================
-  // ELEMENT
-  // =====================================
+// ===============================
+// SUARA NOTIFIKASI
+// ===============================
 
-  const topicInput =
-    document.getElementById("topic");
+let audioContext=null;
+let soundEnabled=false;
 
-  const adminInput =
-    document.getElementById("admin");
+function playSound(){
 
-  const messageInput =
-    document.getElementById("message");
+  if(!soundEnabled)return;
 
-  const sendButton =
-    document.getElementById("sendButton");
+  if(!audioContext)
+    audioContext=new AudioContext();
 
-  const sendMessage =
-    document.getElementById("sendMessage");
+  const osc=audioContext.createOscillator();
+  const gain=audioContext.createGain();
 
-  const codeBox =
-    document.getElementById("codeBox");
+  osc.connect(gain);
+  gain.connect(audioContext.destination);
 
-  const storyCodeElement =
-    document.getElementById("storyCode");
+  osc.frequency.value=800;
+  gain.gain.setValueAtTime(.2,audioContext.currentTime);
+  gain.gain.exponentialRampToValueAtTime(
+    .01,audioContext.currentTime+.5
+  );
 
-  const copyButton =
-    document.getElementById("copyButton");
+  osc.start();
+  osc.stop(audioContext.currentTime+.5);
+}
 
-  const checkCodeInput =
-    document.getElementById("checkCode");
+soundBtn.onclick=async()=>{
 
-  const checkButton =
-    document.getElementById("checkButton");
+  audioContext=new AudioContext();
 
-  const checkMessage =
-    document.getElementById("checkMessage");
+  if(audioContext.state==="suspended")
+    await audioContext.resume();
 
-  const replyBox =
-    document.getElementById("replyBox");
+  soundEnabled=true;
+  soundBtn.textContent="🔔 Suara Notifikasi Aktif";
 
-  const statusText =
-    document.getElementById("statusText");
-
-  const replyText =
-    document.getElementById("replyText");
+  playSound();
+};
 
 
-  // =====================================
-  // FUNGSI PESAN
-  // =====================================
+// ===============================
+// BUAT KODE 4 KARAKTER
+// ===============================
 
-  function showMessage(element, text, type) {
+function makeCode(){
 
-    element.textContent = text;
+  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let code="";
 
-    element.className =
-      "message " + type;
+  for(let i=0;i<4;i++)
+    code+=chars[Math.floor(Math.random()*chars.length)];
 
-    element.style.display = "block";
+  return code;
+}
+
+
+// ===============================
+// KIRIM CERITA
+// ===============================
+
+submitBtn.onclick=async()=>{
+
+  error.style.display="none";
+
+  const message=document.getElementById("message").value.trim();
+  const topic=document.getElementById("topic").value;
+  const admin=document.getElementById("admin").value;
+
+  if(!message){
+
+    error.textContent="Tulis ceritamu terlebih dahulu.";
+    error.style.display="block";
+    return;
   }
 
+  submitBtn.disabled=true;
+  submitBtn.textContent="Mengirim...";
 
-  // =====================================
-  // BUAT KODE 4 KARAKTER
-  // =====================================
+  try{
 
-  function generateCode() {
+    let code;
+    let ref;
+    let snap;
 
-    const characters =
-      "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+    // Cari kode yang belum digunakan
+    do{
+      code=makeCode();
+      ref=doc(db,"stories",code);
+      snap=await getDoc(ref);
+    }while(snap.exists());
 
-    let code = "";
+    await setDoc(ref,{
+      topic:topic,
+      admin:admin,
+      message:message,
+      storyCode:code,
+      reply:"",
+      status:"Menunggu",
+      createdAt:serverTimestamp()
+    });
 
-    for (let i = 0; i < 4; i++) {
+    storyCode.textContent=code;
+    codeCard.style.display="block";
 
-      const randomIndex =
-        Math.floor(
-          Math.random() * characters.length
-        );
+    document.getElementById("message").value="";
 
-      code += characters[randomIndex];
-    }
+    // Pantau balasan secara langsung
+    watchReply(code);
 
-    return code;
+  }catch(err){
+
+    console.error(err);
+
+    error.textContent=
+      "Cerita gagal dikirim. Periksa koneksi dan Firestore Rules.";
+
+    error.style.display="block";
+
   }
 
-
-  // =====================================
-  // KIRIM CERITA
-  // =====================================
-
-  sendButton.addEventListener(
-    "click",
-    async () => {
-
-      const topic =
-        topicInput.value.trim();
-
-      const admin =
-        adminInput.value.trim();
-
-      const message =
-        messageInput.value.trim();
+  submitBtn.disabled=false;
+  submitBtn.textContent="Kirim Cerita";
+};
 
 
-      if (!topic) {
+// ===============================
+// PANTAU BALASAN
+// ===============================
 
-        showMessage(
-          sendMessage,
-          "Silakan pilih topik cerita.",
-          "error"
-        );
+let stopReply=null;
 
-        return;
-      }
+function watchReply(code){
 
+  if(stopReply)stopReply();
 
-      if (!admin) {
+  const ref=doc(db,"stories",code);
+  let first=true;
+  let oldReply="";
 
-        showMessage(
-          sendMessage,
-          "Silakan pilih Admin.",
-          "error"
-        );
+  stopReply=onSnapshot(ref,(snap)=>{
 
-        return;
-      }
+    if(!snap.exists())return;
 
+    const data=snap.data();
+    const reply=data.reply||"";
 
-      if (!message) {
+    if(reply){
 
-        showMessage(
-          sendMessage,
-          "Silakan tulis ceritamu terlebih dahulu.",
-          "error"
-        );
+      replyResult.innerHTML=
+        "<b>💬 Balasan Admin:</b><br><br>"+
+        escapeHTML(reply);
 
-        return;
-      }
+      if(!first && reply!==oldReply)
+        playSound();
 
-
-      sendButton.disabled = true;
-
-      sendButton.textContent =
-        "Mengirim...";
-
-
-      try {
-
-        /*
-          Kode 4 karakter digunakan sebagai
-          ID dokumen Firestore.
-        */
-
-        const storyCode =
-          generateCode();
-
-        const storyRef =
-          doc(
-            db,
-            "stories",
-            storyCode
-          );
-
-
-        await setDoc(
-          storyRef,
-          {
-
-            storyCode: storyCode,
-
-            topic: topic,
-
-            admin: admin,
-
-            message: message,
-
-            reply: "",
-
-            status: "Menunggu",
-
-            createdAt:
-              serverTimestamp()
-
-          }
-        );
-
-
-        storyCodeElement.textContent =
-          storyCode;
-
-        codeBox.style.display =
-          "block";
-
-
-        showMessage(
-          sendMessage,
-          "Cerita berhasil dikirim secara anonim.",
-          "success"
-        );
-
-
-        topicInput.value = "";
-
-        adminInput.value = "";
-
-        messageInput.value = "";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-          sendMessage,
-          "Cerita gagal dikirim. Silakan coba lagi.",
-          "error"
-        );
-
-      }
-
-
-      sendButton.disabled = false;
-
-      sendButton.textContent =
-        "Kirim Cerita";
-
+      oldReply=reply;
     }
-  );
+
+    first=false;
+  });
+}
 
 
-  // =====================================
-  // SALIN KODE
-  // =====================================
+// ===============================
+// CEK KODE
+// ===============================
 
-  copyButton.addEventListener(
-    "click",
-    async () => {
+checkBtn.onclick=async()=>{
 
-      const code =
-        storyCodeElement.textContent;
+  const code=
+    document.getElementById("checkCode")
+    .value.trim().toUpperCase();
 
-      try {
+  if(code.length!==4){
 
-        await navigator.clipboard.writeText(code);
+    showCheck("Masukkan kode 4 karakter.");
+    return;
+  }
 
-        copyButton.textContent =
-          "✅ Kode Tersalin!";
+  checkBtn.disabled=true;
+  checkBtn.textContent="Memeriksa...";
 
-        setTimeout(
-          () => {
+  try{
 
-            copyButton.textContent =
-              "📋 Salin Kode";
+    const snap=
+      await getDoc(doc(db,"stories",code));
 
-          },
-          2000
+    if(!snap.exists()){
+
+      showCheck("❌ Kode cerita tidak ditemukan.");
+
+    }else{
+
+      const data=snap.data();
+
+      if(data.reply){
+
+        showCheck(
+          "<b>💬 Balasan Admin:</b><br><br>"+
+          escapeHTML(data.reply)
         );
 
-      } catch (error) {
+      }else{
 
-        alert(
-          "Kode kamu: " + code
+        showCheck(
+          "⏳ Ceritamu belum dibalas Admin."
         );
 
       }
 
+      watchReply(code);
     }
-  );
+
+  }catch(err){
+
+    console.error(err);
+
+    showCheck(
+      "❌ Gagal mengecek. Periksa koneksi."
+    );
+
+  }
+
+  checkBtn.disabled=false;
+  checkBtn.textContent="Cek Balasan";
+};
 
 
-  // =====================================
-  // CEK BALASAN
-  // =====================================
+// ===============================
+// TAMPILKAN HASIL
+// ===============================
 
-  checkButton.addEventListener(
-    "click",
-    async () => {
+function showCheck(text){
 
-      const code =
-        checkCodeInput.value
-          .trim()
-          .toUpperCase();
+  checkResult.innerHTML=text;
+  checkResult.style.display="block";
+}
 
 
-      replyBox.style.display =
-        "none";
+// ===============================
+// AMANKAN TEKS
+// ===============================
 
+function escapeHTML(text){
 
-      if (code.length !== 4) {
-
-        showMessage(
-          checkMessage,
-          "Masukkan kode cerita 4 karakter.",
-          "error"
-        );
-
-        return;
-      }
-
-
-      checkButton.disabled = true;
-
-      checkButton.textContent =
-        "Mengecek...";
-
-
-      try {
-
-        const storyRef =
-          doc(
-            db,
-            "stories",
-            code
-          );
-
-
-        const storySnapshot =
-          await getDoc(storyRef);
-
-
-        if (!storySnapshot.exists()) {
-
-          showMessage(
-            checkMessage,
-            "Kode cerita tidak ditemukan.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        const story =
-          storySnapshot.data();
-
-
-        showMessage(
-          checkMessage,
-          "Cerita ditemukan.",
-          "success"
-        );
-
-
-        statusText.textContent =
-          "Status: " +
-          (story.status || "Menunggu");
-
-
-        if (
-          story.reply &&
-          story.reply.trim() !== ""
-        ) {
-
-          replyText.textContent =
-            story.reply;
-
-        } else {
-
-          replyText.textContent =
-            "Admin belum memberikan balasan. Silakan cek kembali nanti.";
-
-        }
-
-
-        replyBox.style.display =
-          "block";
-
-
-      } catch (error) {
-
-        console.error(error);
-
-        showMessage(
-          checkMessage,
-          "Terjadi kesalahan saat mengecek cerita.",
-          "error"
-        );
-
-      }
-
-
-      checkButton.disabled = false;
-
-      checkButton.textContent =
-        "Cek Cerita";
-
-    }
-  );
+  const div=document.createElement("div");
+  div.textContent=String(text);
+  return div.innerHTML;
+}
 
 </script>
 
