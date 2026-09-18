@@ -1,768 +1,695 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SpeakOn - Admin</title>
 
-<title>SpeakOn - Admin</title>
-
-<style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b0b0f;
-    color: white;
-}
-
-header {
-    background: #111116;
-    border-bottom: 1px solid #292932;
-    padding: 18px 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: bold;
-}
-
-.logo span {
-    color: #4da3ff;
-}
-
-.logout-btn {
-    display: none;
-    background: #ef4444;
-    color: white;
-    border: none;
-    padding: 9px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.container {
-    max-width: 1100px;
-    margin: 35px auto;
-    padding: 0 20px;
-}
-
-.login-box {
-    max-width: 500px;
-    margin: 50px auto;
-    background: #15151c;
-    border: 1px solid #292932;
-    border-radius: 15px;
-    padding: 35px;
-    text-align: center;
-}
-
-.login-box h1 {
-    margin-bottom: 10px;
-}
-
-.login-box p {
-    color: #aaa;
-    line-height: 1.5;
-}
-
-.google-btn {
-    margin-top: 20px;
-    background: white;
-    color: #111;
-    border: none;
-    padding: 13px 22px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 15px;
-}
-
-.google-btn:hover {
-    background: #ddd;
-}
-
-.google-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.error {
-    display: none;
-    margin-top: 15px;
-    padding: 12px;
-    background: #451a1a;
-    color: #fca5a5;
-    border-radius: 8px;
-}
-
-.dashboard {
-    display: none;
-}
-
-.welcome {
-    margin-bottom: 25px;
-}
-
-.welcome h1 {
-    margin-bottom: 8px;
-}
-
-.welcome p {
-    color: #aaa;
-}
-
-.admin-info {
-    background: #15151c;
-    border: 1px solid #292932;
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 20px;
-    color: #ccc;
-}
-
-.message {
-    background: #15151c;
-    border: 1px solid #292932;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 15px;
-}
-
-.message-header {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-bottom: 15px;
-}
-
-.anonymous {
-    color: #4da3ff;
-    font-weight: bold;
-}
-
-.time {
-    color: #777;
-    font-size: 13px;
-}
-
-.topic {
-    display: inline-block;
-    background: #202029;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    margin-bottom: 12px;
-}
-
-.message-text {
-    color: #ddd;
-    line-height: 1.6;
-    white-space: pre-wrap;
-    margin-bottom: 15px;
-}
-
-.target {
-    color: #aaa;
-    margin-bottom: 15px;
-}
-
-.reply-area {
-    border-top: 1px solid #292932;
-    padding-top: 15px;
-}
-
-.reply-area textarea {
-    width: 100%;
-    min-height: 90px;
-    resize: vertical;
-    background: #0d0d12;
-    color: white;
-    border: 1px solid #333;
-    border-radius: 8px;
-    padding: 12px;
-    font-size: 14px;
-}
-
-.reply-btn {
-    margin-top: 10px;
-    background: #4da3ff;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.reply-btn:hover {
-    background: #3186d8;
-}
-
-.reply-btn:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.existing-reply {
-    margin-top: 15px;
-    padding: 15px;
-    background: #102a1b;
-    border-radius: 8px;
-    color: #d1fae5;
-}
-
-.empty {
-    text-align: center;
-    color: #888;
-    padding: 40px;
-    background: #15151c;
-    border-radius: 15px;
-}
-
-.loading {
-    text-align: center;
-    color: #aaa;
-    padding: 30px;
-}
-
-@media (max-width: 600px) {
-    header {
-        padding: 15px;
+  <style>
+    * {
+      box-sizing: border-box;
     }
 
-    .logo {
-        font-size: 20px;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f5f9;
+      color: #111827;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 22px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 30px;
+    }
+
+    header p {
+      margin: 7px 0 0;
+      opacity: 0.8;
     }
 
     .container {
-        margin: 20px auto;
-        padding: 0 12px;
+      max-width: 850px;
+      margin: 30px auto;
+      padding: 0 18px;
     }
 
-    .message-header {
-        flex-direction: column;
+    .card {
+      background: white;
+      border-radius: 22px;
+      padding: 25px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.07);
     }
-}
-</style>
+
+    h2 {
+      margin-top: 0;
+    }
+
+    button {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 13px;
+      background: #111827;
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 12px;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+    }
+
+    .google {
+      background: #4285f4;
+    }
+
+    .logout {
+      background: #dc2626;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .admin-info {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+    }
+
+    .story {
+      border: 1px solid #e5e7eb;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 18px;
+    }
+
+    .story p {
+      line-height: 1.6;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #f3f4f6;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .waiting {
+      background: #fff7ed;
+      color: #9a3412;
+    }
+
+    .answered {
+      background: #ecfdf5;
+      color: #047857;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      font-size: 15px;
+      resize: vertical;
+      margin-top: 10px;
+    }
+
+    .error {
+      background: #fef2f2;
+      color: #991b1b;
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 15px;
+    }
+
+    .success {
+      background: #ecfdf5;
+      color: #065f46;
+      padding: 14px;
+      border-radius: 12px;
+      margin-top: 15px;
+    }
+
+    .empty {
+      text-align: center;
+      padding: 30px;
+      color: #6b7280;
+    }
+  </style>
 </head>
 
 <body>
 
 <header>
-
-    <div class="logo">
-        SPEAK<span>ON</span> ADMIN
-    </div>
-
-    <button id="logoutBtn" class="logout-btn">
-        Keluar
-    </button>
-
+  <h1>SPEAKON</h1>
+  <p>Panel Admin</p>
 </header>
 
 <div class="container">
 
-    <!-- LOGIN -->
+  <!-- LOGIN -->
+  <div id="loginCard" class="card">
+    <h2>🔐 Login Admin</h2>
 
-    <div id="loginBox" class="login-box">
+    <p>
+      Login menggunakan akun Google yang telah terdaftar sebagai admin.
+    </p>
 
-        <h1>🔐 Login Admin</h1>
+    <button id="loginButton" class="google">
+      🔵 Login dengan Google
+    </button>
 
-        <p>
-            Masuk menggunakan akun Google admin
-            untuk mengelola cerita di SpeakOn.
-        </p>
+    <div id="loginError"></div>
+  </div>
 
-        <button id="googleLogin" class="google-btn">
-            🔵 Masuk dengan Google
-        </button>
 
-        <div id="loginError" class="error"></div>
+  <!-- DASHBOARD -->
+  <div id="dashboard" class="hidden">
+
+    <div class="card">
+
+      <h2>👋 Dashboard Admin</h2>
+
+      <div class="admin-info">
+        <div>
+          <strong>Admin:</strong>
+          <span id="adminName"></span>
+        </div>
+
+        <div style="margin-top:8px;">
+          <strong>Email:</strong>
+          <span id="adminEmail"></span>
+        </div>
+      </div>
+
+      <button id="logoutButton" class="logout">
+        Keluar
+      </button>
 
     </div>
 
-    <!-- DASHBOARD -->
 
-    <div id="dashboard" class="dashboard">
+    <div class="card">
 
-        <div class="welcome">
+      <h2>📨 Cerita Masuk</h2>
 
-            <h1>Dashboard SpeakOn</h1>
-
-            <p>
-                Kelola cerita dan berikan tanggapan
-                kepada pencerita secara aman.
-            </p>
-
+      <div id="stories">
+        <div class="empty">
+          Memuat cerita...
         </div>
-
-        <div class="admin-info">
-
-            👤 Login sebagai:
-            <b id="adminEmail"></b>
-
-            <br>
-
-            🛡️ <span id="adminRole"></span>
-
-        </div>
-
-        <div id="messages">
-
-            <div class="loading">
-                Memuat cerita...
-            </div>
-
-        </div>
+      </div>
 
     </div>
+
+  </div>
 
 </div>
 
+
 <script type="module">
 
-import { auth, db } from "./firebase.js";
+  import { auth, db } from "./firebase.js";
 
-import {
+  import {
     GoogleAuthProvider,
     signInWithPopup,
     onAuthStateChanged,
     signOut
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-import {
+  import {
     collection,
     query,
     orderBy,
     onSnapshot,
     doc,
     updateDoc
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+  } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-// ==================================================
-// DAFTAR ADMIN
-// ==================================================
-// Untuk sementara hanya 1 akun.
-// Nanti Admin 2 dan Admin 3 bisa ditambahkan.
+  // ==========================================
+  // DAFTAR 3 ADMIN
+  // ==========================================
 
-const ADMIN_EMAILS = {
-    "mqamqaoke@gmail.com": "Admin 1"
-};
+  const ADMIN_EMAILS = {
 
+    "ypiiw86@gmail.com": "Admin 1",
 
-// ==================================================
-// ELEMENT WEBSITE
-// ==================================================
+    "restuaxioo@gmail.com": "Admin 2",
 
-const loginBox = document.getElementById("loginBox");
-const dashboard = document.getElementById("dashboard");
-const googleLogin = document.getElementById("googleLogin");
-const logoutBtn = document.getElementById("logoutBtn");
-const loginError = document.getElementById("loginError");
-const adminEmail = document.getElementById("adminEmail");
-const adminRole = document.getElementById("adminRole");
-const messages = document.getElementById("messages");
+    "Dinolahh284@gmail.com": "Admin 3"
+
+  };
 
 
-// Menyimpan fungsi unsubscribe Firestore
-let unsubscribeStories = null;
+  // ==========================================
+  // ELEMENT
+  // ==========================================
+
+  const loginCard =
+    document.getElementById("loginCard");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const loginButton =
+    document.getElementById("loginButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
+
+  const loginError =
+    document.getElementById("loginError");
+
+  const adminName =
+    document.getElementById("adminName");
+
+  const adminEmail =
+    document.getElementById("adminEmail");
+
+  const stories =
+    document.getElementById("stories");
 
 
-// ==================================================
-// LOGIN GOOGLE
-// ==================================================
+  // ==========================================
+  // LOGIN GOOGLE
+  // ==========================================
 
-googleLogin.addEventListener("click", async () => {
+  loginButton.addEventListener(
+    "click",
+    async () => {
 
-    loginError.style.display = "none";
-    googleLogin.disabled = true;
-    googleLogin.textContent = "Membuka Google...";
+      loginError.innerHTML = "";
 
-    const provider = new GoogleAuthProvider();
+      loginButton.disabled = true;
 
-    try {
+      loginButton.textContent =
+        "Membuka Google...";
 
-        await signInWithPopup(auth, provider);
+      try {
 
-    } catch (error) {
+        const provider =
+          new GoogleAuthProvider();
 
-        console.error("Login error:", error);
+        await signInWithPopup(
+          auth,
+          provider
+        );
 
-        loginError.textContent =
-            "Login gagal. Silakan coba lagi.";
+      } catch (error) {
 
-        loginError.style.display = "block";
+        console.error(error);
 
-    } finally {
+        loginError.innerHTML =
+          `<div class="error">
+            Login gagal. Silakan coba lagi.
+          </div>`;
 
-        googleLogin.disabled = false;
-        googleLogin.textContent = "🔵 Masuk dengan Google";
+      }
+
+      loginButton.disabled = false;
+
+      loginButton.textContent =
+        "🔵 Login dengan Google";
 
     }
+  );
 
-});
 
+  // ==========================================
+  // CEK LOGIN
+  // ==========================================
 
-// ==================================================
-// CEK LOGIN
-// ==================================================
+  onAuthStateChanged(
+    auth,
+    (user) => {
 
-onAuthStateChanged(auth, (user) => {
+      if (!user) {
 
-    // Belum login
-    if (!user) {
+        loginCard.classList.remove(
+          "hidden"
+        );
 
-        loginBox.style.display = "block";
-        dashboard.style.display = "none";
-        logoutBtn.style.display = "none";
-
-        if (unsubscribeStories) {
-            unsubscribeStories();
-            unsubscribeStories = null;
-        }
+        dashboard.classList.add(
+          "hidden"
+        );
 
         return;
-    }
+      }
 
 
-    // Pastikan email tersedia
-    const email =
-        (user.email || "").toLowerCase();
+      const email =
+        (user.email || "")
+          .toLowerCase();
 
 
-    // Cek apakah email termasuk admin
-    if (!ADMIN_EMAILS[email]) {
+      // ======================================
+      // CEK APAKAH EMAIL ADMIN
+      // ======================================
 
-        alert(
-            "Akun ini tidak terdaftar sebagai admin SpeakOn."
-        );
+      if (!ADMIN_EMAILS[email]) {
 
         signOut(auth);
 
+        loginError.innerHTML =
+          `<div class="error">
+            ❌ Akun ini tidak terdaftar sebagai admin.
+          </div>`;
+
         return;
-    }
+      }
 
 
-    // ==================================================
-    // LOGIN ADMIN BERHASIL
-    // ==================================================
+      // ======================================
+      // TAMPILKAN DASHBOARD
+      // ======================================
 
-    loginBox.style.display = "none";
-    dashboard.style.display = "block";
-    logoutBtn.style.display = "block";
+      loginCard.classList.add(
+        "hidden"
+      );
 
-    adminEmail.textContent = user.email;
-    adminRole.textContent = ADMIN_EMAILS[email];
+      dashboard.classList.remove(
+        "hidden"
+      );
 
-    loadMessages();
+      adminName.textContent =
+        ADMIN_EMAILS[email];
 
-});
+      adminEmail.textContent =
+        user.email;
 
 
-// ==================================================
-// LOGOUT
-// ==================================================
-
-logoutBtn.addEventListener("click", async () => {
-
-    try {
-
-        await signOut(auth);
-
-    } catch (error) {
-
-        console.error("Logout error:", error);
+      loadStories();
 
     }
-
-});
-
-
-// ==================================================
-// MEMUAT CERITA DARI FIRESTORE
-// ==================================================
-
-function loadMessages() {
-
-    // Hentikan listener sebelumnya
-    if (unsubscribeStories) {
-        unsubscribeStories();
-    }
-
-    const storiesRef =
-        collection(db, "stories");
-
-    const q =
-        query(
-            storiesRef,
-            orderBy("createdAt", "desc")
-        );
+  );
 
 
-    unsubscribeStories = onSnapshot(
-        q,
-        (snapshot) => {
+  // ==========================================
+  // LOAD CERITA
+  // ==========================================
 
-            if (snapshot.empty) {
+  function loadStories() {
 
-                messages.innerHTML = `
-                    <div class="empty">
-                        📭 Belum ada cerita masuk.
-                    </div>
-                `;
-
-                return;
-            }
-
-
-            messages.innerHTML = "";
+    const storiesQuery =
+      query(
+        collection(db, "stories"),
+        orderBy(
+          "createdAt",
+          "desc"
+        )
+      );
 
 
-            snapshot.forEach((storyDoc) => {
+    onSnapshot(
+      storiesQuery,
 
-                const data =
-                    storyDoc.data();
+      (snapshot) => {
 
-                const id =
-                    storyDoc.id;
-
-
-                let date =
-                    "Waktu belum tersedia";
-
-                if (data.createdAt) {
-
-                    try {
-
-                        date =
-                            data.createdAt
-                                .toDate()
-                                .toLocaleString("id-ID");
-
-                    } catch (error) {
-
-                        console.error(
-                            "Gagal membaca waktu:",
-                            error
-                        );
-
-                    }
-
-                }
+        stories.innerHTML = "";
 
 
-                const card =
-                    document.createElement("div");
+        if (snapshot.empty) {
 
-                card.className = "message";
+          stories.innerHTML =
+            `<div class="empty">
+              Belum ada cerita masuk.
+            </div>`;
 
-
-                card.innerHTML = `
-
-                    <div class="message-header">
-
-                        <span class="anonymous">
-                            👤 Pencerita Anonim
-                        </span>
-
-                        <span class="time">
-                            ${escapeHTML(date)}
-                        </span>
-
-                    </div>
-
-                    <div class="topic">
-                        ${escapeHTML(
-                            data.topic || "Tanpa topik"
-                        )}
-                    </div>
-
-                    <div class="target">
-                        🎯 Ditujukan kepada:
-                        <b>
-                            ${escapeHTML(
-                                data.admin || "Belum dipilih"
-                            )}
-                        </b>
-                    </div>
-
-                    <div class="message-text">
-                        ${escapeHTML(
-                            data.message || ""
-                        )}
-                    </div>
-
-                    ${
-                        data.reply
-                        ?
-                        `
-                        <div class="existing-reply">
-
-                            <b>💬 Balasan Admin:</b>
-
-                            <br><br>
-
-                            ${escapeHTML(data.reply)}
-
-                        </div>
-                        `
-                        :
-                        `
-                        <div class="reply-area">
-
-                            <textarea
-                                id="reply-${escapeHTML(id)}"
-                                placeholder="Tulis balasan untuk pencerita..."
-                            ></textarea>
-
-                            <button
-                                class="reply-btn"
-                                data-id="${escapeHTML(id)}"
-                            >
-                                Kirim Balasan
-                            </button>
-
-                        </div>
-                        `
-                    }
-
-                `;
+          return;
+        }
 
 
-                messages.appendChild(card);
+        snapshot.forEach(
+          (storyDoc) => {
 
-            });
+            const story =
+              storyDoc.data();
+
+            const id =
+              storyDoc.id;
 
 
-            // Pasang fungsi tombol balasan
-            document
-                .querySelectorAll(".reply-btn")
-                .forEach((button) => {
+            const storyElement =
+              document.createElement("div");
 
-                    button.addEventListener(
-                        "click",
-                        () => sendReply(button)
-                    );
+            storyElement.className =
+              "story";
 
-                });
 
-        },
-        (error) => {
+            const statusClass =
+              story.status === "Sudah dijawab"
+                ? "answered"
+                : "waiting";
 
-            console.error(
-                "Firestore error:",
-                error
-            );
 
-            messages.innerHTML = `
-                <div class="error" style="display:block;">
-                    ❌ Gagal memuat cerita.
-                    <br><br>
-                    Pastikan Firestore Rules sudah dikonfigurasi.
-                </div>
+            storyElement.innerHTML = `
+
+              <div>
+
+                <span class="badge">
+                  ${escapeHTML(
+                    story.admin || "Admin"
+                  )}
+                </span>
+
+                <span class="badge ${statusClass}">
+                  ${escapeHTML(
+                    story.status || "Menunggu"
+                  )}
+                </span>
+
+              </div>
+
+
+              <p>
+                <strong>Topik:</strong><br>
+                ${escapeHTML(
+                  story.topic || "-"
+                )}
+              </p>
+
+
+              <p>
+                <strong>Cerita:</strong><br>
+                ${escapeHTML(
+                  story.message || "-"
+                )}
+              </p>
+
+
+              <p>
+                <strong>Kode:</strong><br>
+                ${escapeHTML(
+                  story.storyCode || id
+                )}
+              </p>
+
+
+              <label>
+                <strong>Balasan Admin:</strong>
+              </label>
+
+              <textarea
+                id="reply-${id}"
+                placeholder="Tulis balasan untuk pencerita..."
+              >${escapeHTML(
+                story.reply || ""
+              )}</textarea>
+
+
+              <button
+                data-id="${id}"
+                class="reply-button"
+              >
+                💬 Simpan Balasan
+              </button>
+
+              <div id="result-${id}"></div>
+
             `;
 
-        }
-    );
 
-}
+            stories.appendChild(
+              storyElement
+            );
 
-
-// ==================================================
-// KIRIM BALASAN
-// ==================================================
-
-async function sendReply(button) {
-
-    const id =
-        button.dataset.id;
-
-    const textarea =
-        document.getElementById(
-            "reply-" + id
+          }
         );
 
 
-    if (!textarea) {
-        return;
-    }
+        // ====================================
+        // TOMBOL BALAS
+        // ====================================
+
+        document
+          .querySelectorAll(
+            ".reply-button"
+          )
+          .forEach(
+            (button) => {
+
+              button.addEventListener(
+                "click",
+                () => {
+
+                  saveReply(
+                    button.dataset.id
+                  );
+
+                }
+              );
+
+            }
+          );
+
+      },
+
+      (error) => {
+
+        console.error(error);
+
+        stories.innerHTML =
+          `<div class="error">
+            Gagal memuat cerita.
+          </div>`;
+
+      }
+    );
+
+  }
+
+
+  // ==========================================
+  // SIMPAN BALASAN
+  // ==========================================
+
+  async function saveReply(
+    storyId
+  ) {
+
+    const textarea =
+      document.getElementById(
+        "reply-" + storyId
+      );
+
+    const result =
+      document.getElementById(
+        "result-" + storyId
+      );
 
 
     const reply =
-        textarea.value.trim();
+      textarea.value.trim();
 
 
     if (!reply) {
 
-        alert(
-            "Tulis balasan terlebih dahulu."
-        );
+      result.innerHTML =
+        `<div class="error">
+          Balasan tidak boleh kosong.
+        </div>`;
 
-        return;
+      return;
     }
-
-
-    button.disabled = true;
-    button.textContent = "Mengirim...";
 
 
     try {
 
-        await updateDoc(
-            doc(db, "stories", id),
-            {
-                reply: reply,
-                status: "Sudah dijawab"
-            }
-        );
+      await updateDoc(
+        doc(
+          db,
+          "stories",
+          storyId
+        ),
+        {
+
+          reply: reply,
+
+          status: "Sudah dijawab",
+
+          answeredAt:
+            new Date()
+
+        }
+      );
 
 
-        alert(
-            "Balasan berhasil dikirim."
-        );
+      result.innerHTML =
+        `<div class="success">
+          ✅ Balasan berhasil disimpan.
+        </div>`;
+
+
+      setTimeout(
+        () => {
+
+          result.innerHTML = "";
+
+        },
+        2500
+      );
+
 
     } catch (error) {
 
-        console.error(
-            "Reply error:",
-            error
-        );
+      console.error(error);
 
-        alert(
-            "Balasan gagal dikirim. Pastikan Firestore Rules sudah benar."
-        );
-
-        button.disabled = false;
-        button.textContent = "Kirim Balasan";
+      result.innerHTML =
+        `<div class="error">
+          ❌ Balasan gagal disimpan.
+        </div>`;
 
     }
 
-}
+  }
 
 
-// ==================================================
-// MENCEGAH HTML BERBAHAYA
-// ==================================================
+  // ==========================================
+  // LOGOUT
+  // ==========================================
 
-function escapeHTML(text) {
+  logoutButton.addEventListener(
+    "click",
+    async () => {
 
-    const div =
-        document.createElement("div");
+      await signOut(auth);
 
-    div.textContent =
-        String(text);
+    }
+  );
 
-    return div.innerHTML;
 
-}
+  // ==========================================
+  // AMANKAN TEKS HTML
+  // ==========================================
+
+  function escapeHTML(
+    text
+  ) {
+
+    return String(text)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+
+  }
 
 </script>
 
