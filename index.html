@@ -3,397 +3,372 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SpeakOn</title>
+
+<title>SpeakOn - Ruang Aman Siswa</title>
 
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;font-family:Arial,sans-serif;background:#0b0b0f;color:white
+* {
+    box-sizing: border-box;
 }
-header{
-  padding:18px 25px;background:#111116;border-bottom:1px solid #292932;
-  display:flex;justify-content:space-between;align-items:center
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f3f4f6;
+    color: #111827;
 }
-.logo{font-size:25px;font-weight:bold}
-.logo span{color:#4da3ff}
-.admin-btn,.sound-btn,.submit-btn,.check-btn{
-  border:0;border-radius:8px;padding:10px 15px;cursor:pointer;font-weight:bold
+
+header {
+    background: #111827;
+    color: white;
+    padding: 20px;
 }
-.admin-btn{background:#202029;color:white}
-.sound-btn{background:#202029;color:#4da3ff;margin-bottom:15px}
-.container{max-width:700px;margin:40px auto;padding:0 20px}
-.card{
-  background:#15151c;border:1px solid #292932;border-radius:15px;
-  padding:25px;margin-bottom:20px
+
+.header-content {
+    max-width: 850px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
-h1{text-align:center}
-p{color:#aaa;line-height:1.5}
-label{display:block;margin:15px 0 7px;font-weight:bold}
-select,textarea,input{
-  width:100%;background:#0d0d12;color:white;border:1px solid #333;
-  border-radius:8px;padding:12px;font-size:14px
+
+.logo {
+    font-size: 28px;
+    font-weight: bold;
 }
-textarea{min-height:150px;resize:vertical}
-.submit-btn{width:100%;margin-top:18px;background:#4da3ff;color:white}
-.check-btn{background:#4da3ff;color:white;margin-top:10px}
-.result{
-  margin-top:15px;padding:15px;background:#102a1b;
-  border-radius:8px;color:#d1fae5
+
+.admin {
+    color: white;
+    text-decoration: none;
+    border: 1px solid white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 14px;
 }
-.code{
-  font-size:24px;font-weight:bold;color:#4da3ff;
-  letter-spacing:5px;text-align:center;margin:15px
+
+.container {
+    max-width: 850px;
+    margin: 30px auto;
+    padding: 0 15px;
 }
-.error{
-  display:none;background:#451a1a;color:#fca5a5;
-  padding:12px;border-radius:8px;margin-top:12px
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
-.small{font-size:13px;color:#777}
+
+h1 {
+    margin-top: 0;
+}
+
+.info {
+    background: #eef2ff;
+    padding: 15px;
+    border-radius: 10px;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 18px;
+    margin-bottom: 7px;
+    font-weight: bold;
+}
+
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 170px;
+    resize: vertical;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 14px;
+    border: none;
+    border-radius: 9px;
+    background: #111827;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #374151;
+}
+
+.success {
+    display: none;
+    margin-top: 15px;
+    padding: 14px;
+    background: #dcfce7;
+    color: #166534;
+    border-radius: 9px;
+}
+
+.error {
+    display: none;
+    margin-top: 15px;
+    padding: 14px;
+    background: #fee2e2;
+    color: #991b1b;
+    border-radius: 9px;
+}
+
+footer {
+    text-align: center;
+    color: #6b7280;
+    padding: 25px;
+}
 </style>
 </head>
 
 <body>
 
 <header>
-  <div class="logo">SPEAK<span>ON</span></div>
-  <button class="admin-btn"
-    onclick="location.href='admin.html'">🔐 Admin</button>
+    <div class="header-content">
+
+        <div>
+            <div class="logo">SPEAKON</div>
+            <div>Ruang Aman untuk Cerita & Aspirasi Siswa</div>
+        </div>
+
+        <a href="admin.html" class="admin">
+            Login Admin
+        </a>
+
+    </div>
 </header>
 
 <div class="container">
 
-  <div class="card">
-    <h1>🗣️ Ceritakan di SpeakOn</h1>
-    <p style="text-align:center">
-      Tempat aman untuk menyampaikan cerita secara anonim.
-    </p>
+    <div class="card">
 
-    <button id="soundBtn" class="sound-btn">
-      🔔 Aktifkan Suara Notifikasi
-    </button>
+        <h1>Tempat untuk Bercerita</h1>
 
-    <label>Topik Cerita</label>
-    <select id="topic">
-      <option value="Pribadi">Pribadi</option>
-      <option value="Sekolah">Sekolah</option>
-      <option value="Pertemanan">Pertemanan</option>
-      <option value="Keluarga">Keluarga</option>
-      <option value="Lainnya">Lainnya</option>
-    </select>
+        <p>
+            Ceritakan masalah, pengalaman, aspirasi, kritik,
+            atau saran yang ingin kamu sampaikan.
+        </p>
 
-    <label>Ditujukan kepada</label>
-    <select id="admin">
-      <option value="Admin 1">Admin 1</option>
-      <option value="Admin 2">Admin 2</option>
-      <option value="Admin 3">Admin 3</option>
-    </select>
+        <div class="info">
+            🔒 <b>Anonim</b><br>
+            Kamu tidak perlu menuliskan nama, nomor HP,
+            email, atau kelas.
+        </div>
 
-    <label>Ceritamu</label>
-    <textarea id="message"
-      placeholder="Tulis ceritamu di sini..."></textarea>
+        <form id="speakOnForm">
 
-    <button id="submitBtn" class="submit-btn">
-      Kirim Cerita
-    </button>
+            <label for="topic">Topik</label>
 
-    <div id="error" class="error"></div>
-  </div>
+            <select id="topic" required>
+                <option value="">Pilih topik</option>
+                <option value="Masalah pribadi">Masalah pribadi</option>
+                <option value="Belajar dan tugas">Belajar dan tugas</option>
+                <option value="Pertemanan">Pertemanan</option>
+                <option value="Lingkungan sekolah">Lingkungan sekolah</option>
+                <option value="Aspirasi dan saran">Aspirasi dan saran</option>
+                <option value="Lainnya">Lainnya</option>
+            </select>
 
-  <div id="codeCard" class="card" style="display:none">
-    <h2 style="text-align:center">🔑 Kode Ceritamu</h2>
-    <p style="text-align:center">
-      Simpan kode ini untuk melihat balasan Admin.
-    </p>
+            <label for="adminChoice">
+                Pilih Admin yang ingin menjawab
+            </label>
 
-    <div id="storyCode" class="code"></div>
+            <select id="adminChoice" required>
+                <option value="">Pilih Admin 1, 2, atau 3</option>
+                <option value="Admin 1">Admin 1</option>
+                <option value="Admin 2">Admin 2</option>
+                <option value="Admin 3">Admin 3</option>
+            </select>
 
-    <div id="replyResult" class="result">
-      ⏳ Menunggu balasan Admin...
+            <label for="message">Cerita / Pesan</label>
+
+            <textarea
+                id="message"
+                maxlength="3000"
+                placeholder="Tulis ceritamu di sini..."
+                required></textarea>
+
+            <button type="submit">
+                Kirim Secara Anonim
+            </button>
+
+            <div id="success" class="success">
+                ✅ Pesan berhasil dikirim secara anonim.
+            </div>
+
+            <div id="error" class="error">
+                ❌ Pesan gagal dikirim. Silakan coba lagi.
+            </div>
+
+        </form>
+
     </div>
-  </div>
-
-  <div class="card">
-    <h2>💬 Cek Balasan</h2>
-
-    <p>
-      Masukkan kode cerita yang kamu simpan.
-    </p>
-
-    <input id="checkCode"
-      maxlength="4"
-      placeholder="Contoh: A7K2">
-
-    <button id="checkBtn" class="check-btn">
-      Cek Balasan
-    </button>
-
-    <div id="checkResult" class="result" style="display:none"></div>
-  </div>
 
 </div>
 
+<footer>
+    SpeakOn © 2026
+</footer>
+
 <script type="module">
 
-import {db} from "./firebase.js";
+import { db } from "./firebase.js";
 
 import {
-  doc,setDoc,getDoc,onSnapshot,serverTimestamp
+    collection,
+    addDoc,
+    serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-// ===============================
-// SUARA NOTIFIKASI
-// ===============================
-
-let audioContext=null;
-let soundEnabled=false;
-
-function playSound(){
-
-  if(!soundEnabled)return;
-
-  if(!audioContext)
-    audioContext=new AudioContext();
-
-  const osc=audioContext.createOscillator();
-  const gain=audioContext.createGain();
-
-  osc.connect(gain);
-  gain.connect(audioContext.destination);
-
-  osc.frequency.value=800;
-  gain.gain.setValueAtTime(.2,audioContext.currentTime);
-  gain.gain.exponentialRampToValueAtTime(
-    .01,audioContext.currentTime+.5
-  );
-
-  osc.start();
-  osc.stop(audioContext.currentTime+.5);
-}
-
-soundBtn.onclick=async()=>{
-
-  audioContext=new AudioContext();
-
-  if(audioContext.state==="suspended")
-    await audioContext.resume();
-
-  soundEnabled=true;
-  soundBtn.textContent="🔔 Suara Notifikasi Aktif";
-
-  playSound();
-};
+const form = document.getElementById("speakOnForm");
 
 
-// ===============================
-// BUAT KODE 4 KARAKTER
-// ===============================
+// ==================================================
+// ID PENGGUNA ANONIM
+// ==================================================
+// ID ini disimpan di browser.
+// Tidak menyimpan nama, email, nomor HP, atau identitas pribadi.
 
-function makeCode(){
+function getAnonymousUserId() {
 
-  const chars="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
-  let code="";
+    let userId =
+        localStorage.getItem("speakOnUserId");
 
-  for(let i=0;i<4;i++)
-    code+=chars[Math.floor(Math.random()*chars.length)];
+    if (!userId) {
 
-  return code;
+        if (crypto.randomUUID) {
+
+            userId =
+                "USER-" + crypto.randomUUID();
+
+        } else {
+
+            userId =
+                "USER-" +
+                Date.now() +
+                "-" +
+                Math.random()
+                    .toString(36)
+                    .substring(2);
+
+        }
+
+        localStorage.setItem(
+            "speakOnUserId",
+            userId
+        );
+    }
+
+    return userId;
 }
 
 
-// ===============================
+const anonymousUserId =
+    getAnonymousUserId();
+
+
+// ==================================================
 // KIRIM CERITA
-// ===============================
+// ==================================================
 
-submitBtn.onclick=async()=>{
+form.addEventListener("submit", async function(event) {
 
-  error.style.display="none";
+    event.preventDefault();
 
-  const message=document.getElementById("message").value.trim();
-  const topic=document.getElementById("topic").value;
-  const admin=document.getElementById("admin").value;
+    const topic =
+        document.getElementById("topic").value;
 
-  if(!message){
+    const admin =
+        document.getElementById("adminChoice").value;
 
-    error.textContent="Tulis ceritamu terlebih dahulu.";
-    error.style.display="block";
-    return;
-  }
+    const message =
+        document.getElementById("message").value.trim();
 
-  submitBtn.disabled=true;
-  submitBtn.textContent="Mengirim...";
+    const success =
+        document.getElementById("success");
 
-  try{
-
-    let code;
-    let ref;
-    let snap;
-
-    // Cari kode yang belum digunakan
-    do{
-      code=makeCode();
-      ref=doc(db,"stories",code);
-      snap=await getDoc(ref);
-    }while(snap.exists());
-
-    await setDoc(ref,{
-      topic:topic,
-      admin:admin,
-      message:message,
-      storyCode:code,
-      reply:"",
-      status:"Menunggu",
-      createdAt:serverTimestamp()
-    });
-
-    storyCode.textContent=code;
-    codeCard.style.display="block";
-
-    document.getElementById("message").value="";
-
-    // Pantau balasan secara langsung
-    watchReply(code);
-
-  }catch(err){
-
-    console.error(err);
-
-    error.textContent=
-      "Cerita gagal dikirim. Periksa koneksi dan Firestore Rules.";
-
-    error.style.display="block";
-
-  }
-
-  submitBtn.disabled=false;
-  submitBtn.textContent="Kirim Cerita";
-};
+    const error =
+        document.getElementById("error");
 
 
-// ===============================
-// PANTAU BALASAN
-// ===============================
+    if (!topic || !admin || !message) {
 
-let stopReply=null;
-
-function watchReply(code){
-
-  if(stopReply)stopReply();
-
-  const ref=doc(db,"stories",code);
-  let first=true;
-  let oldReply="";
-
-  stopReply=onSnapshot(ref,(snap)=>{
-
-    if(!snap.exists())return;
-
-    const data=snap.data();
-    const reply=data.reply||"";
-
-    if(reply){
-
-      replyResult.innerHTML=
-        "<b>💬 Balasan Admin:</b><br><br>"+
-        escapeHTML(reply);
-
-      if(!first && reply!==oldReply)
-        playSound();
-
-      oldReply=reply;
-    }
-
-    first=false;
-  });
-}
-
-
-// ===============================
-// CEK KODE
-// ===============================
-
-checkBtn.onclick=async()=>{
-
-  const code=
-    document.getElementById("checkCode")
-    .value.trim().toUpperCase();
-
-  if(code.length!==4){
-
-    showCheck("Masukkan kode 4 karakter.");
-    return;
-  }
-
-  checkBtn.disabled=true;
-  checkBtn.textContent="Memeriksa...";
-
-  try{
-
-    const snap=
-      await getDoc(doc(db,"stories",code));
-
-    if(!snap.exists()){
-
-      showCheck("❌ Kode cerita tidak ditemukan.");
-
-    }else{
-
-      const data=snap.data();
-
-      if(data.reply){
-
-        showCheck(
-          "<b>💬 Balasan Admin:</b><br><br>"+
-          escapeHTML(data.reply)
+        alert(
+            "Lengkapi semua bagian terlebih dahulu."
         );
 
-      }else{
-
-        showCheck(
-          "⏳ Ceritamu belum dibalas Admin."
-        );
-
-      }
-
-      watchReply(code);
+        return;
     }
 
-  }catch(err){
 
-    console.error(err);
+    const submitButton =
+        form.querySelector("button[type='submit']");
 
-    showCheck(
-      "❌ Gagal mengecek. Periksa koneksi."
-    );
-
-  }
-
-  checkBtn.disabled=false;
-  checkBtn.textContent="Cek Balasan";
-};
+    submitButton.disabled = true;
+    submitButton.textContent = "Mengirim...";
 
 
-// ===============================
-// TAMPILKAN HASIL
-// ===============================
+    try {
 
-function showCheck(text){
+        await addDoc(collection(db, "stories"), {
 
-  checkResult.innerHTML=text;
-  checkResult.style.display="block";
-}
+            topic: topic,
+
+            admin: admin,
+
+            message: message,
+
+            // ID anonim untuk statistik pengguna
+            userId: anonymousUserId,
+
+            reply: "",
+
+            status: "Menunggu",
+
+            createdAt: serverTimestamp()
+
+        });
 
 
-// ===============================
-// AMANKAN TEKS
-// ===============================
+        form.reset();
 
-function escapeHTML(text){
+        error.style.display = "none";
 
-  const div=document.createElement("div");
-  div.textContent=String(text);
-  return div.innerHTML;
-}
+        success.style.display = "block";
+
+
+    } catch (err) {
+
+        console.error(err);
+
+        success.style.display = "none";
+
+        error.style.display = "block";
+
+    } finally {
+
+        submitButton.disabled = false;
+        submitButton.textContent =
+            "Kirim Secara Anonim";
+
+    }
+
+});
 
 </script>
 
