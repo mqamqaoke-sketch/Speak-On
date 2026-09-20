@@ -2,135 +2,153 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>SpeakOn - Ruang Aman Siswa</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SpeakOn</title>
 
 <style>
-* {
-    box-sizing: border-box;
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:#0b0b0f;
+color:#fff;
+font-family:Arial,sans-serif
 }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f3f4f6;
-    color: #111827;
+header{
+padding:18px 22px;
+background:#111116;
+border-bottom:1px solid #292932;
+display:flex;
+justify-content:space-between;
+align-items:center
 }
 
-header {
-    background: #111827;
-    color: white;
-    padding: 20px;
+.logo{
+font-size:25px;
+font-weight:bold
 }
 
-.header-content {
-    max-width: 850px;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.logo span{
+color:#4da3ff
 }
 
-.logo {
-    font-size: 28px;
-    font-weight: bold;
+.admin{
+background:#4da3ff;
+color:white;
+padding:10px 14px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold
 }
 
-.admin {
-    color: white;
-    text-decoration: none;
-    border: 1px solid white;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: 14px;
+.container{
+max-width:700px;
+margin:30px auto;
+padding:15px
 }
 
-.container {
-    max-width: 850px;
-    margin: 30px auto;
-    padding: 0 15px;
+.card{
+background:#15151c;
+border:1px solid #292932;
+border-radius:15px;
+padding:20px;
+margin-bottom:18px
 }
 
-.card {
-    background: white;
-    padding: 25px;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+h1{
+margin-top:0
 }
 
-h1 {
-    margin-top: 0;
+label{
+display:block;
+margin:14px 0 7px;
+color:#ccc
 }
 
-.info {
-    background: #eef2ff;
-    padding: 15px;
-    border-radius: 10px;
-    line-height: 1.5;
-    margin-bottom: 20px;
+select,textarea{
+width:100%;
+background:#0d0d12;
+color:white;
+border:1px solid #333;
+border-radius:9px;
+padding:13px;
+font-size:15px
 }
 
-label {
-    display: block;
-    margin-top: 18px;
-    margin-bottom: 7px;
-    font-weight: bold;
+textarea{
+min-height:150px;
+resize:vertical
 }
 
-select,
-textarea {
-    width: 100%;
-    padding: 13px;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    font-size: 15px;
+button{
+border:0;
+border-radius:9px;
+padding:12px 16px;
+font-weight:bold;
+cursor:pointer
 }
 
-textarea {
-    min-height: 170px;
-    resize: vertical;
+.sound{
+width:100%;
+background:#202029;
+color:#4da3ff;
+margin-bottom:15px
 }
 
-button {
-    width: 100%;
-    margin-top: 20px;
-    padding: 14px;
-    border: none;
-    border-radius: 9px;
-    background: #111827;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+.sound.active{
+background:#12351f;
+color:#4ade80
 }
 
-button:hover {
-    background: #374151;
+.send{
+width:100%;
+background:#4da3ff;
+color:white;
+margin-top:15px
 }
 
-.success {
-    display: none;
-    margin-top: 15px;
-    padding: 14px;
-    background: #dcfce7;
-    color: #166534;
-    border-radius: 9px;
+.status{
+padding:14px;
+border-radius:9px;
+background:#202029;
+margin-top:15px;
+display:none;
+line-height:1.5
 }
 
-.error {
-    display: none;
-    margin-top: 15px;
-    padding: 14px;
-    background: #fee2e2;
-    color: #991b1b;
-    border-radius: 9px;
+.reply{
+background:#102a1b;
+border:1px solid #1f6138;
+padding:16px;
+border-radius:10px;
+margin-top:15px;
+display:none
 }
 
-footer {
-    text-align: center;
-    color: #6b7280;
-    padding: 25px;
+.small{
+color:#999;
+font-size:13px;
+line-height:1.5
+}
+
+.success{
+color:#4ade80
+}
+
+@media(max-width:600px){
+.container{
+margin:15px auto;
+padding:10px
+}
+
+header{
+padding:15px
+}
+
+.logo{
+font-size:21px
+}
 }
 </style>
 </head>
@@ -138,237 +156,461 @@ footer {
 <body>
 
 <header>
-    <div class="header-content">
 
-        <div>
-            <div class="logo">SPEAKON</div>
-            <div>Ruang Aman untuk Cerita & Aspirasi Siswa</div>
-        </div>
+<div class="logo">
+SPEAK<span>ON</span>
+</div>
 
-        <a href="admin.html" class="admin">
-            Login Admin
-        </a>
+<a class="admin" href="admin.html">
+Login Admin
+</a>
 
-    </div>
 </header>
+
 
 <div class="container">
 
-    <div class="card">
+<div class="card">
 
-        <h1>Tempat untuk Bercerita</h1>
+<h1>💬 Ceritakan Sesuatu</h1>
 
-        <p>
-            Ceritakan masalah, pengalaman, aspirasi, kritik,
-            atau saran yang ingin kamu sampaikan.
-        </p>
+<p class="small">
+Ceritamu bersifat anonim. Pilih admin yang ingin menerima ceritamu.
+</p>
 
-        <div class="info">
-            🔒 <b>Anonim</b><br>
-            Kamu tidak perlu menuliskan nama, nomor HP,
-            email, atau kelas.
-        </div>
 
-        <form id="speakOnForm">
+<button id="soundBtn" class="sound">
+🔔 Aktifkan Suara Notifikasi
+</button>
 
-            <label for="topic">Topik</label>
 
-            <select id="topic" required>
-                <option value="">Pilih topik</option>
-                <option value="Masalah pribadi">Masalah pribadi</option>
-                <option value="Belajar dan tugas">Belajar dan tugas</option>
-                <option value="Pertemanan">Pertemanan</option>
-                <option value="Lingkungan sekolah">Lingkungan sekolah</option>
-                <option value="Aspirasi dan saran">Aspirasi dan saran</option>
-                <option value="Lainnya">Lainnya</option>
-            </select>
+<label>Topik</label>
 
-            <label for="adminChoice">
-                Pilih Admin yang ingin menjawab
-            </label>
+<select id="topic">
 
-            <select id="adminChoice" required>
-                <option value="">Pilih Admin 1, 2, atau 3</option>
-                <option value="Admin 1">Admin 1</option>
-                <option value="Admin 2">Admin 2</option>
-                <option value="Admin 3">Admin 3</option>
-            </select>
+<option>Masalah pribadi</option>
+<option>Belajar dan tugas</option>
+<option>Pertemanan</option>
+<option>Lingkungan sekolah</option>
+<option>Aspirasi dan saran</option>
+<option>Lainnya</option>
 
-            <label for="message">Cerita / Pesan</label>
+</select>
 
-            <textarea
-                id="message"
-                maxlength="3000"
-                placeholder="Tulis ceritamu di sini..."
-                required></textarea>
 
-            <button type="submit">
-                Kirim Secara Anonim
-            </button>
+<label>Ditujukan kepada</label>
 
-            <div id="success" class="success">
-                ✅ Pesan berhasil dikirim secara anonim.
-            </div>
+<select id="admin">
 
-            <div id="error" class="error">
-                ❌ Pesan gagal dikirim. Silakan coba lagi.
-            </div>
+<option>Admin 1</option>
+<option>Admin 2</option>
+<option>Admin 3</option>
 
-        </form>
+</select>
 
-    </div>
+
+<label>Ceritamu</label>
+
+<textarea
+id="message"
+placeholder="Tulis ceritamu di sini..."
+></textarea>
+
+
+<button id="send" class="send">
+Kirim Cerita
+</button>
+
+
+<div id="status" class="status"></div>
+
+
+<div id="reply" class="reply"></div>
 
 </div>
 
-<footer>
-    SpeakOn © 2026
-</footer>
+
+<div class="card">
+
+<h3>🔒 Privasi</h3>
+
+<p class="small">
+Identitas pencerita tidak ditampilkan kepada admin.
+SpeakOn hanya menggunakan ID anonim untuk menghubungkan
+cerita dengan balasannya.
+</p>
+
+</div>
+
+</div>
+
 
 <script type="module">
 
-import { db } from "./firebase.js";
+import{db}from"./firebase.js";
 
-import {
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import{
+collection,
+addDoc,
+serverTimestamp,
+doc,
+onSnapshot
+}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-const form = document.getElementById("speakOnForm");
+const $=id=>document.getElementById(id);
 
 
-// ==================================================
-// ID PENGGUNA ANONIM
-// ==================================================
-// ID ini disimpan di browser.
-// Tidak menyimpan nama, email, nomor HP, atau identitas pribadi.
+// ===============================
+// ID ANONIM
+// ===============================
 
-function getAnonymousUserId() {
+let userId=localStorage.getItem("speakOnUserId");
 
-    let userId =
-        localStorage.getItem("speakOnUserId");
+if(!userId){
 
-    if (!userId) {
+userId=
+"anon_"+crypto.randomUUID();
 
-        if (crypto.randomUUID) {
+localStorage.setItem(
+"speakOnUserId",
+userId
+);
 
-            userId =
-                "USER-" + crypto.randomUUID();
-
-        } else {
-
-            userId =
-                "USER-" +
-                Date.now() +
-                "-" +
-                Math.random()
-                    .toString(36)
-                    .substring(2);
-
-        }
-
-        localStorage.setItem(
-            "speakOnUserId",
-            userId
-        );
-    }
-
-    return userId;
 }
 
 
-const anonymousUserId =
-    getAnonymousUserId();
+// ===============================
+// SUARA
+// ===============================
+
+let audio=null;
+let soundEnabled=false;
+
+$("soundBtn").onclick=async()=>{
+
+try{
+
+const AC=
+window.AudioContext||
+window.webkitAudioContext;
+
+audio ||= new AC();
+
+if(audio.state==="suspended")
+await audio.resume();
+
+soundEnabled=true;
+
+$("soundBtn").classList.add("active");
+
+$("soundBtn").textContent=
+"🔔 Suara Notifikasi Aktif";
+
+playSound();
+
+if("Notification" in window){
+
+if(Notification.permission==="default"){
+
+await Notification.requestPermission();
+
+}
+
+}
+
+}catch(e){
+
+console.error(e);
+
+alert(
+"Suara tidak dapat diaktifkan di browser ini."
+);
+
+}
+
+};
 
 
-// ==================================================
+function playSound(){
+
+if(!soundEnabled||!audio)return;
+
+const osc=audio.createOscillator();
+const gain=audio.createGain();
+
+osc.connect(gain);
+gain.connect(audio.destination);
+
+osc.type="sine";
+osc.frequency.setValueAtTime(
+880,
+audio.currentTime
+);
+
+osc.frequency.setValueAtTime(
+660,
+audio.currentTime+.12
+);
+
+gain.gain.setValueAtTime(
+.25,
+audio.currentTime
+);
+
+gain.gain.exponentialRampToValueAtTime(
+.01,
+audio.currentTime+.5
+);
+
+osc.start();
+osc.stop(
+audio.currentTime+.5
+);
+
+}
+
+
+// ===============================
+// NOTIFIKASI BROWSER
+// ===============================
+
+function browserNotification(){
+
+if(
+"Notification" in window &&
+Notification.permission==="granted"
+){
+
+new Notification(
+"💬 SpeakOn",
+{
+body:"Admin telah membalas ceritamu.",
+icon:"https://mqamqaoke-sketch.github.io/Speak-On/"
+}
+);
+
+}
+
+}
+
+
+// ===============================
+// SIMPAN STORY ID
+// ===============================
+
+function saveStoryId(id){
+
+let ids=
+JSON.parse(
+localStorage.getItem("speakOnStoryIds")||"[]"
+);
+
+if(!ids.includes(id))
+ids.push(id);
+
+ids=ids.slice(-20);
+
+localStorage.setItem(
+"speakOnStoryIds",
+JSON.stringify(ids)
+);
+
+}
+
+
+// ===============================
+// MONITOR BALASAN
+// ===============================
+
+const watched={};
+
+function watchStory(id){
+
+if(watched[id])return;
+
+watched[id]=true;
+
+let first=true;
+let oldReply="";
+
+onSnapshot(
+doc(db,"stories",id),
+snap=>{
+
+if(!snap.exists())return;
+
+const data=snap.data();
+const reply=String(data.reply||"").trim();
+
+
+// pertama kali hanya menyimpan data
+if(first){
+
+oldReply=reply;
+first=false;
+
+showReply(reply);
+
+return;
+
+}
+
+
+// ADMIN MEMBALAS
+if(
+reply &&
+reply!==oldReply
+){
+
+oldReply=reply;
+
+showReply(reply);
+
+playSound();
+
+browserNotification();
+
+}
+
+},
+error=>console.error(error)
+);
+
+}
+
+
+// ===============================
+// TAMPILKAN BALASAN
+// ===============================
+
+function showReply(reply){
+
+const box=$("reply");
+
+if(!reply){
+
+box.style.display="none";
+return;
+
+}
+
+box.style.display="block";
+
+box.innerHTML=`
+<b>💬 Balasan Admin</b>
+<br><br>
+${safe(reply)}
+`;
+
+}
+
+
+// ===============================
+// LOAD CERITA YANG PERNAH DIKIRIM
+// ===============================
+
+const savedIds=
+JSON.parse(
+localStorage.getItem("speakOnStoryIds")||"[]"
+);
+
+savedIds.forEach(id=>watchStory(id));
+
+
+// ===============================
 // KIRIM CERITA
-// ==================================================
+// ===============================
 
-form.addEventListener("submit", async function(event) {
+$("send").onclick=async()=>{
 
-    event.preventDefault();
+const message=
+$("message").value.trim();
 
-    const topic =
-        document.getElementById("topic").value;
+const topic=
+$("topic").value;
 
-    const admin =
-        document.getElementById("adminChoice").value;
+const admin=
+$("admin").value;
 
-    const message =
-        document.getElementById("message").value.trim();
+if(!message){
 
-    const success =
-        document.getElementById("success");
+alert("Silakan tulis ceritamu terlebih dahulu.");
 
-    const error =
-        document.getElementById("error");
+return;
 
-
-    if (!topic || !admin || !message) {
-
-        alert(
-            "Lengkapi semua bagian terlebih dahulu."
-        );
-
-        return;
-    }
+}
 
 
-    const submitButton =
-        form.querySelector("button[type='submit']");
+const btn=$("send");
 
-    submitButton.disabled = true;
-    submitButton.textContent = "Mengirim...";
-
-
-    try {
-
-        await addDoc(collection(db, "stories"), {
-
-            topic: topic,
-
-            admin: admin,
-
-            message: message,
-
-            // ID anonim untuk statistik pengguna
-            userId: anonymousUserId,
-
-            reply: "",
-
-            status: "Menunggu",
-
-            createdAt: serverTimestamp()
-
-        });
+btn.disabled=true;
+btn.textContent="Mengirim...";
 
 
-        form.reset();
+try{
 
-        error.style.display = "none";
+const ref=await addDoc(
+collection(db,"stories"),
+{
+topic,
+admin,
+message,
+userId,
+reply:"",
+status:"Menunggu",
+createdAt:serverTimestamp()
+}
+);
 
-        success.style.display = "block";
+
+saveStoryId(ref.id);
+
+watchStory(ref.id);
+
+$("message").value="";
+
+$("status").style.display="block";
+
+$("status").innerHTML=
+`<span class="success">
+✅ Cerita berhasil dikirim secara anonim.
+</span><br>
+Tunggu balasan dari ${safe(admin)}.
+`;
+
+}catch(e){
+
+console.error(e);
+
+$("status").style.display="block";
+
+$("status").innerHTML=
+"❌ Cerita gagal dikirim. Coba lagi.";
+
+}
+
+btn.disabled=false;
+btn.textContent="Kirim Cerita";
+
+};
 
 
-    } catch (err) {
+// ===============================
+// ANTI HTML
+// ===============================
 
-        console.error(err);
+function safe(text){
 
-        success.style.display = "none";
+const div=
+document.createElement("div");
 
-        error.style.display = "block";
+div.textContent=
+String(text);
 
-    } finally {
+return div.innerHTML;
 
-        submitButton.disabled = false;
-        submitButton.textContent =
-            "Kirim Secara Anonim";
-
-    }
-
-});
+}
 
 </script>
 
