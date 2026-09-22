@@ -3,67 +3,73 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SpeakOn</title>
+<title>SpeakOn — Ruang untuk Cerita</title>
 
 <style>
 *{box-sizing:border-box}
-:root{--bg:#f8f5ee;--card:#fffdf8;--teal:#2f6f73;--dark:#263238;--gray:#6b777a;--border:#e5e0d6}
-body{margin:0;background:var(--bg);color:var(--dark);font-family:Arial,sans-serif}
-header{padding:16px 6%;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:#f8f5eef2;position:sticky;top:0;z-index:5}
-.logo{font-size:24px;font-weight:800}.logo span{color:var(--teal)}
-.admin{color:var(--teal);border:1px solid var(--teal);padding:9px 14px;border-radius:20px;text-decoration:none;font-size:13px;font-weight:bold}
-.hero{max-width:1000px;margin:auto;padding:55px 20px 30px;display:grid;grid-template-columns:1.2fr .8fr;gap:30px;align-items:center}
-.tag{display:inline-block;background:#e4efe9;color:var(--teal);padding:7px 12px;border-radius:20px;font-size:12px;font-weight:bold}
-h1{font-size:clamp(38px,7vw,64px);line-height:1;margin:18px 0;letter-spacing:-3px}
-h1 span{color:var(--teal)}
-p{line-height:1.6;color:var(--gray)}
-.heroBox{background:var(--teal);color:white;padding:30px;border-radius:25px}
-.heroBox p{color:#e5f1ef;font-size:14px}
-.container{width:min(850px,94%);margin:auto;padding-bottom:60px}
-.title{text-align:center;margin:20px 0}
-.paths{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:20px}
-.path,.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:20px}
-.path{cursor:pointer}.path.active{border:2px solid var(--teal);background:#f0f7f4}
-.path h3{margin:8px 0}.path p{font-size:13px;margin:0}
-.card{margin-bottom:16px}
-label{display:block;font-weight:bold;font-size:14px;margin:17px 0 7px}
-select,textarea{width:100%;padding:13px;border:1px solid var(--border);border-radius:12px;background:white;font:inherit;color:var(--dark)}
-textarea{min-height:150px;resize:vertical}
+:root{
+--bg:#070d11;--card:#0e171d;--card2:#111e25;
+--teal:#36a6a4;--cyan:#71d8d0;--text:#f1f5f4;
+--muted:#8fa0a5;--line:#1d3037;--green:#6fbd91;--orange:#e4a56b
+}
+body{margin:0;background:radial-gradient(circle at 80% 10%,#123238 0,#070d11 35%,#05090c 100%);color:var(--text);font-family:Arial,sans-serif}
+header{height:72px;padding:10px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#070d11dd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
+.logo{height:52px;width:auto;object-fit:contain}
+.admin{color:var(--text);text-decoration:none;border:1px solid var(--line);background:#101a20;padding:10px 16px;border-radius:12px;font-size:13px;font-weight:bold}
+.hero{max-width:1050px;margin:auto;padding:75px 22px 50px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
+.tag{display:inline-block;color:var(--cyan);background:#0e272b;border:1px solid #1c484b;padding:8px 13px;border-radius:30px;font-size:12px;font-weight:bold}
+h1{font-size:clamp(42px,7vw,72px);line-height:.98;letter-spacing:-4px;margin:20px 0}
+h1 span{color:var(--cyan)}
+.hero p{color:var(--muted);font-size:17px;line-height:1.7;max-width:580px}
+.heroCard{background:linear-gradient(145deg,#10272c,#0c151b);border:1px solid #1d4649;border-radius:28px;padding:30px;box-shadow:0 20px 60px #0008}
+.heroCard b{font-size:26px}
+.heroCard p{font-size:14px}
+.container{width:min(900px,94%);margin:auto;padding-bottom:70px}
+.title{text-align:center;margin-bottom:20px}.title p{color:var(--muted)}
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px}
+.path,.card{background:linear-gradient(145deg,#0f1a20,#0b1318);border:1px solid var(--line);border-radius:22px;padding:21px}
+.path{cursor:pointer;transition:.2s}.path:hover{transform:translateY(-2px)}
+.path.active{border-color:#318f91;box-shadow:0 0 25px #1d77751c}
+.path h3{margin:8px 0}.path p,.small{color:var(--muted);font-size:13px;line-height:1.6}
+label{display:block;font-weight:bold;font-size:13px;margin:18px 0 7px}
+select,textarea{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;background:#091116;color:var(--text);font:inherit;outline:0}
+select:focus,textarea:focus{border-color:var(--teal)}
+textarea{min-height:160px;resize:vertical}
 button{font:inherit;cursor:pointer}
-.sound,.vnBtn{width:100%;padding:12px;border:1px solid var(--border);border-radius:12px;background:#f3f0e8;color:var(--teal);font-weight:bold}
-.sound.active{background:#e2f0e8}
-.send{width:100%;margin-top:15px;padding:14px;border:0;border-radius:12px;background:var(--teal);color:white;font-weight:bold}
-.vn{margin-top:15px;padding:15px;border-radius:15px;background:#f5f2ea;border:1px solid var(--border)}
+.sound,.vnBtn{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#101b21;color:var(--cyan);font-weight:bold}
+.sound.active{background:#102b22;color:var(--green)}
+.send{width:100%;margin-top:15px;padding:14px;border:0;border-radius:13px;background:var(--teal);color:#031011;font-weight:900}
+.vn{margin-top:16px;padding:16px;border-radius:16px;background:#0a1419;border:1px solid var(--line)}
 .vnBtns{display:flex;gap:8px}.vnBtns button{flex:1}
-#stop{background:white;color:var(--dark)}
-#recording{display:none;color:#c85c5c;font-weight:bold;font-size:13px;margin-top:8px}
-audio{display:none;width:100%;margin-top:10px}
-.status,.reply,.code{display:none;margin-top:15px;padding:15px;border-radius:13px;line-height:1.6}
-.status{background:#e8f4ed;color:#286044}.reply{background:#eaf4ee;color:#2d6348}.code{background:#fff2df;color:#805c35}
-.code b{font-size:22px;letter-spacing:3px}
+#stop{background:#111d22;color:var(--text)}
+#recording{display:none;color:#e27d72;font-size:13px;font-weight:bold;margin-top:9px}
+audio{display:none;width:100%;margin-top:12px}
+.status,.reply,.code{display:none;margin-top:16px;padding:16px;border-radius:15px;line-height:1.6}
+.status{background:#0e2820;color:#8bd0a7}.reply{background:#102c24;color:#b7e3ce}.code{background:#272016;color:#edc18f}
+.code b{font-size:23px;letter-spacing:4px}
 .privacy{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.privacy div{background:#f5f2ea;padding:15px;border-radius:14px;font-size:13px}
-footer{text-align:center;border-top:1px solid var(--border);padding:25px;color:var(--gray);font-size:12px}
-@media(max-width:700px){.hero{grid-template-columns:1fr;padding-top:35px}.paths{grid-template-columns:1fr}.privacy{grid-template-columns:1fr}.heroBox{padding:23px}}
+.privacy div{background:#0a151a;border:1px solid var(--line);padding:16px;border-radius:15px;font-size:13px}
+footer{text-align:center;border-top:1px solid var(--line);padding:28px;color:var(--muted);font-size:12px}
+@media(max-width:700px){.hero{grid-template-columns:1fr;padding-top:45px}.paths,.privacy{grid-template-columns:1fr}.heroCard{padding:23px}}
 </style>
 </head>
 
 <body>
 
 <header>
-<div class="logo">SPEAK<span>ON</span></div>
-<a class="admin" href="admin.html">Login Admin</a>
+<img src="logo.png" class="logo" alt="SpeakOn">
+<a href="admin.html" class="admin">Login Admin</a>
 </header>
 
 <section class="hero">
 <div>
-<div class="tag">🌿 Ruang aman untuk cerita</div>
+<div class="tag">🌊 Ruang aman untuk cerita</div>
 <h1>Punya cerita?<br><span>SpeakOn.</span></h1>
 <p>Tempat untuk menyampaikan cerita, masalah, dan aspirasi tanpa harus takut dihakimi.</p>
 </div>
-<div class="heroBox">
-<h2>💬 Bercerita tanpa takut.</h2>
-<p>Mendengar tanpa menghakimi. Identitasmu tetap anonim.</p>
+<div class="heroCard">
+<b>💬 Bercerita tanpa takut.</b>
+<p>Mendengar tanpa menghakimi. Kamu tetap anonim dan bebas memilih cara bercerita.</p>
 </div>
 </section>
 
@@ -71,36 +77,28 @@ footer{text-align:center;border-top:1px solid var(--border);padding:25px;color:v
 
 <div class="title">
 <h2>Pilih ruang ceritamu</h2>
-<p>Kamu bebas memilih cara yang paling nyaman.</p>
+<p>Pilih tempat yang paling nyaman untukmu.</p>
 </div>
 
 <div class="paths">
-
-<div id="privatePath" class="path active" onclick="path('private')">
-<div>🔒</div>
-<h3>Cerita Pribadi</h3>
-<p>Ceritakan sesuatu secara anonim kepada admin. Bisa menggunakan teks atau VN.</p>
+<div id="privatePath" class="path active" onclick="choosePath('private')">
+<div>🔒</div><h3>Cerita Pribadi</h3>
+<p>Ceritamu ditujukan kepada admin. Kamu juga bisa menggunakan VN.</p>
 </div>
 
-<div id="publicPath" class="path" onclick="path('public')">
-<div>🌐</div>
-<h3>Ruang Bersama</h3>
-<p>Bagikan cerita secara anonim dan dapatkan masukan dari pengguna lain.</p>
+<div id="publicPath" class="path" onclick="choosePath('public')">
+<div>🌐</div><h3>Ruang Bersama</h3>
+<p>Tempat berbagi cerita dan mendapatkan masukan dari pengguna lain.</p>
 </div>
-
 </div>
-
 
 <section id="private">
 
 <div class="card">
-
 <h2>🔒 Cerita Pribadi</h2>
-<p>Ceritamu hanya ditujukan kepada admin yang kamu pilih.</p>
+<p class="small">Identitasmu tidak ditampilkan kepada admin.</p>
 
-<button id="sound" class="sound">
-🔔 Aktifkan Suara Notifikasi
-</button>
+<button id="sound" class="sound">🔔 Aktifkan Suara Notifikasi</button>
 
 <label>Topik</label>
 <select id="topic">
@@ -120,355 +118,213 @@ footer{text-align:center;border-top:1px solid var(--border);padding:25px;color:v
 </select>
 
 <label>Ceritamu</label>
-<textarea id="message" placeholder="Tulis ceritamu di sini..."></textarea>
-
+<textarea id="message" placeholder="Tulis apa yang ingin kamu ceritakan..."></textarea>
 
 <div class="vn">
 <b>🎙️ Voice Note</b>
-<p style="font-size:12px">
-Kamu juga bisa merekam suara jika lebih nyaman bercerita lewat VN.
-</p>
-
+<p class="small">Lebih nyaman bercerita lewat suara? Rekam VN di sini.</p>
 <div class="vnBtns">
 <button id="record" class="vnBtn">🎙️ Rekam</button>
 <button id="stop" class="vnBtn" disabled>⏹️ Stop</button>
 </div>
-
 <div id="recording">🔴 Sedang merekam...</div>
-
 <audio id="preview" controls></audio>
 </div>
 
-
-<button id="send" class="send">
-Kirim Cerita
-</button>
+<button id="send" class="send">Kirim Cerita</button>
 
 <div id="status" class="status"></div>
 
 <div id="code" class="code">
 Kode cerita anonim:<br>
 <b id="codeValue"></b><br>
-<small>Simpan kode ini untuk mengecek balasan admin nantinya.</small>
+<span class="small">Simpan kode ini untuk mengecek balasan.</span>
 </div>
 
 <div id="reply" class="reply"></div>
-
 </div>
 
-
 <div class="card">
-<h3>🛡️ Privasi</h3>
-
+<h3>🛡️ Privasi SpeakOn</h3>
 <div class="privacy">
-<div>👤<br><b>Anonim</b><br>Identitas tidak ditampilkan.</div>
-<div>🔒<br><b>Privat</b><br>Cerita hanya untuk admin.</div>
-<div>💬<br><b>Didengarkan</b><br>Mendapat tanggapan manusia.</div>
+<div>👤<br><b>Anonim</b><br><span class="small">Identitas tidak ditampilkan.</span></div>
+<div>🔒<br><b>Privat</b><br><span class="small">Cerita ditujukan kepada admin.</span></div>
+<div>💬<br><b>Didengar</b><br><span class="small">Mendapat tanggapan manusia.</span></div>
 </div>
 </div>
 
 </section>
 
-
 <section id="public" style="display:none">
-
-<div class="card" style="text-align:center;padding:40px 20px">
+<div class="card" style="text-align:center;padding:45px 20px">
 <div style="font-size:50px">🌐</div>
 <h2>Ruang Bersama</h2>
-<p>
-Tempat untuk membagikan cerita secara anonim agar pengguna lain
-dapat memberikan dukungan dan masukan.
-</p>
-<strong style="color:#2f6f73">SEDANG DISIAPKAN</strong>
+<p class="small">Bagikan cerita secara anonim dan dapatkan dukungan dari pengguna lain.</p>
+<p style="color:var(--cyan);font-weight:bold">SEGERA HADIR</p>
 </div>
-
 </section>
 
 </main>
 
 <footer>
-<b style="color:#2f6f73">SpeakOn</b><br><br>
+<b style="color:var(--cyan)">SpeakOn</b><br><br>
 Bercerita tanpa takut, mendengar tanpa menghakimi.
 </footer>
-
 
 <script type="module">
 
 import{db}from"./firebase.js";
-
-import{
-collection,addDoc,serverTimestamp,doc,onSnapshot
-}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
+import{collection,addDoc,serverTimestamp,doc,onSnapshot,updateDoc}
+from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+import{getStorage,ref,uploadBytes,getDownloadURL}
+from"https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
 const $=id=>document.getElementById(id);
 
-
-/* PATH */
-
-window.path=function(x){
-
+window.choosePath=x=>{
 $("privatePath").classList.toggle("active",x==="private");
 $("publicPath").classList.toggle("active",x==="public");
-
 $("private").style.display=x==="private"?"block":"none";
 $("public").style.display=x==="public"?"block":"none";
-
 };
-
-
-/* ANONYMOUS ID */
 
 let userId=localStorage.getItem("speakOnUserId");
-
 if(!userId){
-
 userId="anon_"+crypto.randomUUID();
-
-localStorage.setItem(
-"speakOnUserId",userId
-);
-
+localStorage.setItem("speakOnUserId",userId);
 }
 
-
-/* SOUND */
-
-let audioCtx=null;
-let soundOn=false;
+let ctx=null,soundOn=false;
 
 $("sound").onclick=async()=>{
-
-const AC=window.AudioContext||window.webkitAudioContext;
-
+let AC=window.AudioContext||window.webkitAudioContext;
 if(!AC)return;
-
-audioCtx||=new AC();
-
-if(audioCtx.state==="suspended")
-await audioCtx.resume();
-
+ctx||=new AC();
+if(ctx.state==="suspended")await ctx.resume();
 soundOn=true;
-
 $("sound").classList.add("active");
 $("sound").textContent="🔔 Suara Notifikasi Aktif";
-
 beep();
-
 if("Notification"in window&&Notification.permission==="default")
 await Notification.requestPermission();
-
 };
-
 
 function beep(){
-
-if(!soundOn||!audioCtx)return;
-
-let o=audioCtx.createOscillator();
-let g=audioCtx.createGain();
-
-o.connect(g);
-g.connect(audioCtx.destination);
-
-o.frequency.value=800;
-g.gain.value=.15;
-
-o.start();
-o.stop(audioCtx.currentTime+.3);
-
+if(!ctx||!soundOn)return;
+let o=ctx.createOscillator(),g=ctx.createGain();
+o.connect(g);g.connect(ctx.destination);o.frequency.value=800;
+g.gain.value=.15;o.start();o.stop(ctx.currentTime+.3);
 }
 
-
-/* VN */
-
-let recorder=null;
-let chunks=[];
-let voiceBlob=null;
+let recorder=null,chunks=[],voiceBlob=null;
 
 $("record").onclick=async()=>{
-
 try{
-
 let stream=await navigator.mediaDevices.getUserMedia({audio:true});
-
-chunks=[];
-recorder=new MediaRecorder(stream);
-
-recorder.ondataavailable=e=>{
-if(e.data.size)chunks.push(e.data);
-};
-
+chunks=[];recorder=new MediaRecorder(stream);
+recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
 recorder.onstop=()=>{
-
 voiceBlob=new Blob(chunks,{type:"audio/webm"});
-
 $("preview").src=URL.createObjectURL(voiceBlob);
 $("preview").style.display="block";
-
 $("recording").style.display="none";
-$("record").textContent="🎙️ Rekam Ulang";
 $("record").disabled=false;
+$("record").textContent="🎙️ Rekam Ulang";
 $("stop").disabled=true;
-
 stream.getTracks().forEach(t=>t.stop());
-
 };
-
 recorder.start();
-
 $("record").disabled=true;
 $("stop").disabled=false;
 $("recording").style.display="block";
-
-}catch(e){
-
-alert("Microphone tidak dapat digunakan.");
-
-}
-
+}catch(e){alert("Microphone tidak dapat digunakan.");}
 };
-
 
 $("stop").onclick=()=>{
-
-if(recorder&&recorder.state!=="inactive")
-recorder.stop();
-
+if(recorder&&recorder.state!=="inactive")recorder.stop();
 };
 
-
-/* STORY ID */
-
 function saveId(id){
-
-let ids=JSON.parse(
-localStorage.getItem("speakOnStoryIds")||"[]"
-);
-
-if(!ids.includes(id))ids.push(id);
-
-localStorage.setItem(
-"speakOnStoryIds",
-JSON.stringify(ids.slice(-20))
-);
-
+let a=JSON.parse(localStorage.getItem("speakOnStoryIds")||"[]");
+if(!a.includes(id))a.push(id);
+localStorage.setItem("speakOnStoryIds",JSON.stringify(a.slice(-20)));
 }
-
-
-/* REPLY */
 
 function watch(id){
-
-onSnapshot(doc(db,"stories",id),snap=>{
-
-if(!snap.exists())return;
-
-let d=snap.data();
-
+onSnapshot(doc(db,"stories",id),s=>{
+if(!s.exists())return;
+let d=s.data();
 if(d.reply){
-
 $("reply").style.display="block";
-
-$("reply").innerHTML=
-"<b>💬 Balasan Admin</b><br><br>"+
-safe(d.reply);
-
+$("reply").innerHTML="<b>💬 Balasan Admin</b><br><br>"+safe(d.reply);
 }
-
 });
-
 }
 
-
-JSON.parse(
-localStorage.getItem("speakOnStoryIds")||"[]"
-).forEach(watch);
-
-
-/* SEND */
+JSON.parse(localStorage.getItem("speakOnStoryIds")||"[]").forEach(watch);
 
 $("send").onclick=async()=>{
-
 let message=$("message").value.trim();
-
 if(!message&&!voiceBlob){
-
 alert("Tulis cerita atau rekam VN terlebih dahulu.");
 return;
-
 }
 
 let btn=$("send");
-
-btn.disabled=true;
-btn.textContent="Mengirim...";
+btn.disabled=true;btn.textContent="Mengirim...";
 
 try{
 
-let ref=await addDoc(
-collection(db,"stories"),
-{
+let r=await addDoc(collection(db,"stories"),{
 topic:$("topic").value,
 admin:$("admin").value,
-message:message,
-userId:userId,
+message,
+userId,
 reply:"",
 status:"Menunggu",
 hasVoiceNote:!!voiceBlob,
 createdAt:serverTimestamp()
+});
+
+saveId(r.id);watch(r.id);
+
+if(voiceBlob){
+try{
+let storage=getStorage();
+let file=ref(storage,"voiceNotes/"+r.id+".webm");
+await uploadBytes(file,voiceBlob);
+let url=await getDownloadURL(file);
+await updateDoc(doc(db,"stories",r.id),{voiceNoteUrl:url});
+}catch(e){
+console.error("VN:",e);
 }
-);
+}
 
-saveId(ref.id);
-watch(ref.id);
-
-let code=ref.id.replace(/[^a-zA-Z0-9]/g,"").slice(0,8).toUpperCase();
-
-$("codeValue").textContent=code;
+$("codeValue").textContent=r.id.replace(/[^a-zA-Z0-9]/g,"").slice(0,8).toUpperCase();
 $("code").style.display="block";
-
 $("status").style.display="block";
-$("status").innerHTML=
-"✅ Cerita berhasil dikirim secara anonim.<br>"+
-"Ditujukan kepada <b>"+safe($("admin").value)+"</b>.";
+$("status").innerHTML="✅ Cerita berhasil dikirim secara anonim.<br>Ditujukan kepada <b>"+safe($("admin").value)+"</b>.";
 
 $("message").value="";
 voiceBlob=null;
-
 $("preview").style.display="none";
 $("preview").removeAttribute("src");
 
 }catch(e){
-
 console.error(e);
-
 $("status").style.display="block";
-$("status").style.background="#fbeaea";
-$("status").style.color="#8b3838";
-$("status").textContent="❌ Cerita gagal dikirim.";
-
+$("status").innerHTML="❌ Cerita gagal dikirim.";
 }
 
-btn.disabled=false;
-btn.textContent="Kirim Cerita";
-
+btn.disabled=false;btn.textContent="Kirim Cerita";
 };
 
-
-/* SAFE */
-
-function safe(text){
-
+function safe(t){
 let d=document.createElement("div");
-
-d.textContent=String(text);
-
+d.textContent=String(t);
 return d.innerHTML;
-
 }
 
 </script>
-
 </body>
 </html>
