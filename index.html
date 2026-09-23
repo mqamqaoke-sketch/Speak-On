@@ -7,50 +7,308 @@
 
 <style>
 *{box-sizing:border-box}
+
 :root{
---bg:#070d11;--card:#0e171d;--card2:#111e25;
---teal:#36a6a4;--cyan:#71d8d0;--text:#f1f5f4;
---muted:#8fa0a5;--line:#1d3037;--green:#6fbd91;--orange:#e4a56b
+--bg:#070d11;
+--card:#0e171d;
+--teal:#36a6a4;
+--cyan:#71d8d0;
+--text:#f1f5f4;
+--muted:#8fa0a5;
+--line:#1d3037;
+--green:#6fbd91;
+--orange:#e4a56b;
 }
-body{margin:0;background:radial-gradient(circle at 80% 10%,#123238 0,#070d11 35%,#05090c 100%);color:var(--text);font-family:Arial,sans-serif}
-header{height:72px;padding:10px 6%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);background:#070d11dd;backdrop-filter:blur(14px);position:sticky;top:0;z-index:10}
-.logo{height:52px;width:auto;object-fit:contain}
-.admin{color:var(--text);text-decoration:none;border:1px solid var(--line);background:#101a20;padding:10px 16px;border-radius:12px;font-size:13px;font-weight:bold}
-.hero{max-width:1050px;margin:auto;padding:75px 22px 50px;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center}
-.tag{display:inline-block;color:var(--cyan);background:#0e272b;border:1px solid #1c484b;padding:8px 13px;border-radius:30px;font-size:12px;font-weight:bold}
-h1{font-size:clamp(42px,7vw,72px);line-height:.98;letter-spacing:-4px;margin:20px 0}
+
+body{
+margin:0;
+background:radial-gradient(circle at 80% 10%,#123238 0,#070d11 35%,#05090c 100%);
+color:var(--text);
+font-family:Arial,sans-serif
+}
+
+header{
+height:72px;
+padding:10px 6%;
+display:flex;
+align-items:center;
+justify-content:space-between;
+border-bottom:1px solid var(--line);
+background:#070d11dd;
+backdrop-filter:blur(14px);
+position:sticky;
+top:0;
+z-index:10
+}
+
+.logo{
+height:52px;
+width:auto;
+object-fit:contain
+}
+
+.admin{
+color:var(--text);
+text-decoration:none;
+border:1px solid var(--line);
+background:#101a20;
+padding:10px 16px;
+border-radius:12px;
+font-size:13px;
+font-weight:bold
+}
+
+.hero{
+max-width:1050px;
+margin:auto;
+padding:75px 22px 50px;
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:40px;
+align-items:center
+}
+
+.tag{
+display:inline-block;
+color:var(--cyan);
+background:#0e272b;
+border:1px solid #1c484b;
+padding:8px 13px;
+border-radius:30px;
+font-size:12px;
+font-weight:bold
+}
+
+h1{
+font-size:clamp(42px,7vw,72px);
+line-height:.98;
+letter-spacing:-4px;
+margin:20px 0
+}
+
 h1 span{color:var(--cyan)}
-.hero p{color:var(--muted);font-size:17px;line-height:1.7;max-width:580px}
-.heroCard{background:linear-gradient(145deg,#10272c,#0c151b);border:1px solid #1d4649;border-radius:28px;padding:30px;box-shadow:0 20px 60px #0008}
+
+.hero p{
+color:var(--muted);
+font-size:17px;
+line-height:1.7;
+max-width:580px
+}
+
+.heroCard{
+background:linear-gradient(145deg,#10272c,#0c151b);
+border:1px solid #1d4649;
+border-radius:28px;
+padding:30px;
+box-shadow:0 20px 60px #0008
+}
+
 .heroCard b{font-size:26px}
 .heroCard p{font-size:14px}
-.container{width:min(900px,94%);margin:auto;padding-bottom:70px}
-.title{text-align:center;margin-bottom:20px}.title p{color:var(--muted)}
-.paths{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:20px}
-.path,.card{background:linear-gradient(145deg,#0f1a20,#0b1318);border:1px solid var(--line);border-radius:22px;padding:21px}
-.path{cursor:pointer;transition:.2s}.path:hover{transform:translateY(-2px)}
-.path.active{border-color:#318f91;box-shadow:0 0 25px #1d77751c}
-.path h3{margin:8px 0}.path p,.small{color:var(--muted);font-size:13px;line-height:1.6}
-label{display:block;font-weight:bold;font-size:13px;margin:18px 0 7px}
-select,textarea{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;background:#091116;color:var(--text);font:inherit;outline:0}
-select:focus,textarea:focus{border-color:var(--teal)}
-textarea{min-height:160px;resize:vertical}
-button{font:inherit;cursor:pointer}
-.sound,.vnBtn{width:100%;padding:12px;border:1px solid var(--line);border-radius:13px;background:#101b21;color:var(--cyan);font-weight:bold}
-.sound.active{background:#102b22;color:var(--green)}
-.send{width:100%;margin-top:15px;padding:14px;border:0;border-radius:13px;background:var(--teal);color:#031011;font-weight:900}
-.vn{margin-top:16px;padding:16px;border-radius:16px;background:#0a1419;border:1px solid var(--line)}
-.vnBtns{display:flex;gap:8px}.vnBtns button{flex:1}
-#stop{background:#111d22;color:var(--text)}
-#recording{display:none;color:#e27d72;font-size:13px;font-weight:bold;margin-top:9px}
-audio{display:none;width:100%;margin-top:12px}
-.status,.reply,.code{display:none;margin-top:16px;padding:16px;border-radius:15px;line-height:1.6}
-.status{background:#0e2820;color:#8bd0a7}.reply{background:#102c24;color:#b7e3ce}.code{background:#272016;color:#edc18f}
-.code b{font-size:23px;letter-spacing:4px}
-.privacy{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.privacy div{background:#0a151a;border:1px solid var(--line);padding:16px;border-radius:15px;font-size:13px}
-footer{text-align:center;border-top:1px solid var(--line);padding:28px;color:var(--muted);font-size:12px}
-@media(max-width:700px){.hero{grid-template-columns:1fr;padding-top:45px}.paths,.privacy{grid-template-columns:1fr}.heroCard{padding:23px}}
+
+.container{
+width:min(900px,94%);
+margin:auto;
+padding-bottom:70px
+}
+
+.title{
+text-align:center;
+margin-bottom:20px
+}
+
+.title p{color:var(--muted)}
+
+.paths{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:20px
+}
+
+.path,.card{
+background:linear-gradient(145deg,#0f1a20,#0b1318);
+border:1px solid var(--line);
+border-radius:22px;
+padding:21px
+}
+
+.path{
+cursor:pointer;
+transition:.2s
+}
+
+.path:hover{transform:translateY(-2px)}
+
+.path.active{
+border-color:#318f91;
+box-shadow:0 0 25px #1d77751c
+}
+
+.path h3{margin:8px 0}
+
+.path p,.small{
+color:var(--muted);
+font-size:13px;
+line-height:1.6
+}
+
+label{
+display:block;
+font-weight:bold;
+font-size:13px;
+margin:18px 0 7px
+}
+
+select,textarea{
+width:100%;
+padding:14px;
+border:1px solid var(--line);
+border-radius:13px;
+background:#091116;
+color:var(--text);
+font:inherit;
+outline:0
+}
+
+select:focus,textarea:focus{
+border-color:var(--teal)
+}
+
+textarea{
+min-height:160px;
+resize:vertical
+}
+
+button{
+font:inherit;
+cursor:pointer
+}
+
+.sound,.vnBtn{
+width:100%;
+padding:12px;
+border:1px solid var(--line);
+border-radius:13px;
+background:#101b21;
+color:var(--cyan);
+font-weight:bold
+}
+
+.sound.active{
+background:#102b22;
+color:var(--green)
+}
+
+.send{
+width:100%;
+margin-top:15px;
+padding:14px;
+border:0;
+border-radius:13px;
+background:var(--teal);
+color:#031011;
+font-weight:900
+}
+
+.vn{
+margin-top:16px;
+padding:16px;
+border-radius:16px;
+background:#0a1419;
+border:1px solid var(--line)
+}
+
+.vnBtns{
+display:flex;
+gap:8px
+}
+
+.vnBtns button{flex:1}
+
+#stop{
+background:#111d22;
+color:var(--text)
+}
+
+#recording{
+display:none;
+color:#e27d72;
+font-size:13px;
+font-weight:bold;
+margin-top:9px
+}
+
+audio{
+display:none;
+width:100%;
+margin-top:12px
+}
+
+.status,.reply,.code{
+display:none;
+margin-top:16px;
+padding:16px;
+border-radius:15px;
+line-height:1.6
+}
+
+.status{
+background:#0e2820;
+color:#8bd0a7
+}
+
+.reply{
+background:#102c24;
+color:#b7e3ce
+}
+
+.code{
+background:#272016;
+color:#edc18f
+}
+
+.code b{
+font-size:23px;
+letter-spacing:4px
+}
+
+.privacy{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:10px
+}
+
+.privacy div{
+background:#0a151a;
+border:1px solid var(--line);
+padding:16px;
+border-radius:15px;
+font-size:13px
+}
+
+footer{
+text-align:center;
+border-top:1px solid var(--line);
+padding:28px;
+color:var(--muted);
+font-size:12px
+}
+
+@media(max-width:700px){
+.hero{
+grid-template-columns:1fr;
+padding-top:45px
+}
+
+.paths,.privacy{
+grid-template-columns:1fr
+}
+
+.heroCard{
+padding:23px
+}
+}
 </style>
 </head>
 
@@ -62,15 +320,28 @@ footer{text-align:center;border-top:1px solid var(--line);padding:28px;color:var
 </header>
 
 <section class="hero">
+
 <div>
 <div class="tag">🌊 Ruang aman untuk cerita</div>
-<h1>Punya cerita?<br><span>SpeakOn.</span></h1>
-<p>Tempat untuk menyampaikan cerita, masalah, dan aspirasi tanpa harus takut dihakimi.</p>
+
+<h1>
+Punya cerita?<br>
+<span>SpeakOn.</span>
+</h1>
+
+<p>
+Tempat untuk menyampaikan cerita, masalah, dan aspirasi tanpa harus takut dihakimi.
+</p>
 </div>
+
 <div class="heroCard">
 <b>💬 Bercerita tanpa takut.</b>
-<p>Mendengar tanpa menghakimi. Kamu tetap anonim dan bebas memilih cara bercerita.</p>
+
+<p>
+Mendengar tanpa menghakimi. Kamu tetap anonim dan bebas memilih cara bercerita.
+</p>
 </div>
+
 </section>
 
 <main class="container">
@@ -81,26 +352,51 @@ footer{text-align:center;border-top:1px solid var(--line);padding:28px;color:var
 </div>
 
 <div class="paths">
-<div id="privatePath" class="path active" onclick="choosePath('private')">
-<div>🔒</div><h3>Cerita Pribadi</h3>
-<p>Ceritamu ditujukan kepada admin. Kamu juga bisa menggunakan VN.</p>
+
+<div id="privatePath"
+class="path active"
+onclick="choosePath('private')">
+
+<div>🔒</div>
+<h3>Cerita Pribadi</h3>
+
+<p>
+Ceritamu ditujukan kepada admin. Kamu juga bisa menggunakan VN.
+</p>
+
 </div>
 
-<div id="publicPath" class="path" onclick="choosePath('public')">
-<div>🌐</div><h3>Ruang Bersama</h3>
-<p>Tempat berbagi cerita dan mendapatkan masukan dari pengguna lain.</p>
+<div id="publicPath"
+class="path"
+onclick="choosePath('public')">
+
+<div>🌐</div>
+<h3>Ruang Bersama</h3>
+
+<p>
+Tempat berbagi cerita dan mendapatkan masukan dari pengguna lain.
+</p>
+
 </div>
+
 </div>
 
 <section id="private">
 
 <div class="card">
-<h2>🔒 Cerita Pribadi</h2>
-<p class="small">Identitasmu tidak ditampilkan kepada admin.</p>
 
-<button id="sound" class="sound">🔔 Aktifkan Suara Notifikasi</button>
+<h2>🔒 Cerita Pribadi</h2>
+
+<p class="small">
+Identitasmu tidak ditampilkan kepada admin.
+</p>
+
+<button id="sound" class="sound">
+🔔 Aktifkan Notifikasi
+</button>
 
 <label>Topik</label>
+
 <select id="topic">
 <option>Masalah pribadi</option>
 <option>Belajar dan tugas</option>
@@ -111,6 +407,7 @@ footer{text-align:center;border-top:1px solid var(--line);padding:28px;color:var
 </select>
 
 <label>Ditujukan kepada</label>
+
 <select id="admin">
 <option>Admin 1</option>
 <option>Admin 2</option>
@@ -118,213 +415,665 @@ footer{text-align:center;border-top:1px solid var(--line);padding:28px;color:var
 </select>
 
 <label>Ceritamu</label>
-<textarea id="message" placeholder="Tulis apa yang ingin kamu ceritakan..."></textarea>
+
+<textarea
+id="message"
+placeholder="Tulis apa yang ingin kamu ceritakan..."
+></textarea>
 
 <div class="vn">
+
 <b>🎙️ Voice Note</b>
-<p class="small">Lebih nyaman bercerita lewat suara? Rekam VN di sini.</p>
+
+<p class="small">
+Lebih nyaman bercerita lewat suara? Rekam VN di sini.
+</p>
+
 <div class="vnBtns">
-<button id="record" class="vnBtn">🎙️ Rekam</button>
-<button id="stop" class="vnBtn" disabled>⏹️ Stop</button>
-</div>
-<div id="recording">🔴 Sedang merekam...</div>
-<audio id="preview" controls></audio>
+
+<button id="record" class="vnBtn">
+🎙️ Rekam
+</button>
+
+<button id="stop" class="vnBtn" disabled>
+⏹️ Stop
+</button>
+
 </div>
 
-<button id="send" class="send">Kirim Cerita</button>
+<div id="recording">
+🔴 Sedang merekam...
+</div>
+
+<audio id="preview" controls></audio>
+
+</div>
+
+<button id="send" class="send">
+Kirim Cerita
+</button>
 
 <div id="status" class="status"></div>
 
 <div id="code" class="code">
+
 Kode cerita anonim:<br>
-<b id="codeValue"></b><br>
-<span class="small">Simpan kode ini untuk mengecek balasan.</span>
+
+<b id="codeValue"></b>
+
+<br>
+
+<span class="small">
+Simpan kode ini untuk mengecek balasan.
+</span>
+
 </div>
 
 <div id="reply" class="reply"></div>
+
 </div>
 
 <div class="card">
+
 <h3>🛡️ Privasi SpeakOn</h3>
+
 <div class="privacy">
-<div>👤<br><b>Anonim</b><br><span class="small">Identitas tidak ditampilkan.</span></div>
-<div>🔒<br><b>Privat</b><br><span class="small">Cerita ditujukan kepada admin.</span></div>
-<div>💬<br><b>Didengar</b><br><span class="small">Mendapat tanggapan manusia.</span></div>
+
+<div>
+👤<br>
+<b>Anonim</b><br>
+<span class="small">
+Identitas tidak ditampilkan.
+</span>
 </div>
+
+<div>
+🔒<br>
+<b>Privat</b><br>
+<span class="small">
+Cerita ditujukan kepada admin.
+</span>
+</div>
+
+<div>
+💬<br>
+<b>Didengar</b><br>
+<span class="small">
+Mendapat tanggapan manusia.
+</span>
+</div>
+
+</div>
+
 </div>
 
 </section>
 
 <section id="public" style="display:none">
-<div class="card" style="text-align:center;padding:45px 20px">
-<div style="font-size:50px">🌐</div>
-<h2>Ruang Bersama</h2>
-<p class="small">Bagikan cerita secara anonim dan dapatkan dukungan dari pengguna lain.</p>
-<p style="color:var(--cyan);font-weight:bold">SEGERA HADIR</p>
+
+<div class="card"
+style="text-align:center;padding:45px 20px">
+
+<div style="font-size:50px">
+🌐
 </div>
+
+<h2>Ruang Bersama</h2>
+
+<p class="small">
+Bagikan cerita secara anonim dan dapatkan dukungan dari pengguna lain.
+</p>
+
+<p style="color:var(--cyan);font-weight:bold">
+SEGERA HADIR
+</p>
+
+</div>
+
 </section>
 
 </main>
 
 <footer>
-<b style="color:var(--cyan)">SpeakOn</b><br><br>
+
+<b style="color:var(--cyan)">
+SpeakOn
+</b>
+
+<br><br>
+
 Bercerita tanpa takut, mendengar tanpa menghakimi.
+
 </footer>
 
 <script type="module">
 
-import{db}from"./firebase.js";
-import{collection,addDoc,serverTimestamp,doc,onSnapshot,updateDoc}
+import{app,db}from"./firebase.js"; 
+
+import{getMessaging,getToken}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-messaging.js";
+
+import{
+collection,
+addDoc,
+serverTimestamp,
+doc,
+onSnapshot,
+updateDoc
+}
 from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-import{getStorage,ref,uploadBytes,getDownloadURL}
+
+import{
+getStorage,
+ref,
+uploadBytes,
+getDownloadURL
+}
 from"https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
-const $=id=>document.getElementById(id);
+const messaging = getMessaging(app);
 
-window.choosePath=x=>{
-$("privatePath").classList.toggle("active",x==="private");
-$("publicPath").classList.toggle("active",x==="public");
-$("private").style.display=x==="private"?"block":"none";
-$("public").style.display=x==="public"?"block":"none";
-};
+const VAPID_KEY="BNHhQJ9Z9LYgBFmQufi8aWvyf1uJ8G4-dUwVy1oqigK5IiNdUWpcaHOCwv6_ramdzwrbx8BM7nQlMCVRRNjla1o";
 
-let userId=localStorage.getItem("speakOnUserId");
-if(!userId){
-userId="anon_"+crypto.randomUUID();
-localStorage.setItem("speakOnUserId",userId);
+async function setupPushNotifications(){
+
+if(!("serviceWorker"in navigator))return;
+
+let permission=
+await Notification.requestPermission();
+
+if(permission!=="granted")return;
+
+let registration=
+await navigator.serviceWorker.register(
+"./firebase-messaging-sw.js"
+);
+
+let token=
+await getToken(
+messaging,
+{
+vapidKey:VAPID_KEY,
+serviceWorkerRegistration:registration
+}
+);
+
+if(token){
+
+localStorage.setItem(
+"speakOnFcmToken",
+token
+);
+
+console.log(
+"FCM Token:",
+token
+);
+
 }
 
-let ctx=null,soundOn=false;
+} 
+
+setupPushNotifications();
+/* =========================
+   PILIH RUANG
+========================= */
+
+window.choosePath=x=>{
+
+$("privatePath").classList.toggle(
+"active",
+x==="private"
+);
+
+$("publicPath").classList.toggle(
+"active",
+x==="public"
+);
+
+$("private").style.display=
+x==="private"?"block":"none";
+
+$("public").style.display=
+x==="public"?"block":"none";
+
+};
+
+
+/* =========================
+   IDENTITAS ANONIM
+========================= */
+
+let userId=
+localStorage.getItem("speakOnUserId");
+
+if(!userId){
+
+userId="anon_"+crypto.randomUUID();
+
+localStorage.setItem(
+"speakOnUserId",
+userId
+);
+
+}
+
+
+/* =========================
+   NOTIFIKASI
+========================= */
+
+let ctx=null;
+let soundOn=false;
 
 $("sound").onclick=async()=>{
-let AC=window.AudioContext||window.webkitAudioContext;
-if(!AC)return;
+
+let AC=
+window.AudioContext||
+window.webkitAudioContext;
+
+if(AC){
+
 ctx||=new AC();
-if(ctx.state==="suspended")await ctx.resume();
+
+if(ctx.state==="suspended")
+await ctx.resume();
+
 soundOn=true;
+
 $("sound").classList.add("active");
-$("sound").textContent="🔔 Suara Notifikasi Aktif";
+
+$("sound").textContent=
+"🔔 Notifikasi Aktif";
+
 beep();
-if("Notification"in window&&Notification.permission==="default")
+
+}
+
+if(
+"Notification"in window &&
+Notification.permission==="default"
+){
+
 await Notification.requestPermission();
+
+}
+
 };
 
 function beep(){
+
 if(!ctx||!soundOn)return;
-let o=ctx.createOscillator(),g=ctx.createGain();
-o.connect(g);g.connect(ctx.destination);o.frequency.value=800;
-g.gain.value=.15;o.start();o.stop(ctx.currentTime+.3);
+
+let o=ctx.createOscillator();
+
+let g=ctx.createGain();
+
+o.connect(g);
+g.connect(ctx.destination);
+
+o.frequency.value=800;
+
+g.gain.value=.15;
+
+o.start();
+
+o.stop(ctx.currentTime+.3);
+
 }
 
-let recorder=null,chunks=[],voiceBlob=null;
+
+/* =========================
+   NOTIFIKASI LAYAR
+========================= */
+
+function screenNotification(title,body){
+
+if(
+"Notification"in window &&
+Notification.permission==="granted"
+){
+
+new Notification(title,{
+body:body,
+icon:"logo.png"
+});
+
+}
+
+}
+
+
+/* =========================
+   VOICE NOTE
+========================= */
+
+let recorder=null;
+let chunks=[];
+let voiceBlob=null;
 
 $("record").onclick=async()=>{
+
 try{
-let stream=await navigator.mediaDevices.getUserMedia({audio:true});
-chunks=[];recorder=new MediaRecorder(stream);
-recorder.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
-recorder.onstop=()=>{
-voiceBlob=new Blob(chunks,{type:"audio/webm"});
-$("preview").src=URL.createObjectURL(voiceBlob);
-$("preview").style.display="block";
-$("recording").style.display="none";
-$("record").disabled=false;
-$("record").textContent="🎙️ Rekam Ulang";
-$("stop").disabled=true;
-stream.getTracks().forEach(t=>t.stop());
+
+let stream=
+await navigator.mediaDevices
+.getUserMedia({audio:true});
+
+chunks=[];
+
+recorder=
+new MediaRecorder(stream);
+
+recorder.ondataavailable=e=>{
+
+if(e.data.size)
+chunks.push(e.data);
+
 };
+
+recorder.onstop=()=>{
+
+voiceBlob=
+new Blob(
+chunks,
+{type:"audio/webm"}
+);
+
+$("preview").src=
+URL.createObjectURL(voiceBlob);
+
+$("preview").style.display="block";
+
+$("recording").style.display="none";
+
+$("record").disabled=false;
+
+$("record").textContent=
+"🎙️ Rekam Ulang";
+
+$("stop").disabled=true;
+
+stream
+.getTracks()
+.forEach(t=>t.stop());
+
+};
+
 recorder.start();
+
 $("record").disabled=true;
+
 $("stop").disabled=false;
+
 $("recording").style.display="block";
-}catch(e){alert("Microphone tidak dapat digunakan.");}
+
+}catch(e){
+
+alert("Microphone tidak dapat digunakan.");
+
+}
+
 };
 
 $("stop").onclick=()=>{
-if(recorder&&recorder.state!=="inactive")recorder.stop();
+
+if(
+recorder &&
+recorder.state!=="inactive"
+){
+
+recorder.stop();
+
+}
+
 };
 
+
+/* =========================
+   SIMPAN STORY ID
+========================= */
+
 function saveId(id){
-let a=JSON.parse(localStorage.getItem("speakOnStoryIds")||"[]");
-if(!a.includes(id))a.push(id);
-localStorage.setItem("speakOnStoryIds",JSON.stringify(a.slice(-20)));
+
+let a=
+JSON.parse(
+localStorage.getItem(
+"speakOnStoryIds"
+)||"[]"
+);
+
+if(!a.includes(id))
+a.push(id);
+
+localStorage.setItem(
+"speakOnStoryIds",
+JSON.stringify(a.slice(-20))
+);
+
 }
+
+
+/* =========================
+   MONITOR BALASAN
+========================= */
 
 function watch(id){
-onSnapshot(doc(db,"stories",id),s=>{
+
+onSnapshot(
+doc(db,"stories",id),
+s=>{
+
 if(!s.exists())return;
+
 let d=s.data();
+
 if(d.reply){
+
+let oldReply=
+localStorage.getItem(
+"speakOnReply_"+id
+);
+
 $("reply").style.display="block";
-$("reply").innerHTML="<b>💬 Balasan Admin</b><br><br>"+safe(d.reply);
-}
-});
+
+$("reply").innerHTML=
+"<b>💬 Balasan Admin</b><br><br>"+
+safe(d.reply);
+
+
+/* notif hanya ketika balasan baru */
+
+if(
+d.reply!==oldReply
+){
+
+if(soundOn)
+beep();
+
+screenNotification(
+"SpeakOn — Ada balasan",
+"Admin sudah membalas ceritamu."
+);
+
+localStorage.setItem(
+"speakOnReply_"+id,
+d.reply
+);
+
 }
 
-JSON.parse(localStorage.getItem("speakOnStoryIds")||"[]").forEach(watch);
+}
+
+});
+
+}
+
+
+/* monitor cerita sebelumnya */
+
+JSON.parse(
+localStorage.getItem(
+"speakOnStoryIds"
+)||"[]"
+).forEach(watch);
+
+
+/* =========================
+   KIRIM CERITA
+========================= */
 
 $("send").onclick=async()=>{
-let message=$("message").value.trim();
+
+let message=
+$("message").value.trim();
+
 if(!message&&!voiceBlob){
-alert("Tulis cerita atau rekam VN terlebih dahulu.");
+
+alert(
+"Tulis cerita atau rekam VN terlebih dahulu."
+);
+
 return;
+
 }
 
 let btn=$("send");
-btn.disabled=true;btn.textContent="Mengirim...";
+
+btn.disabled=true;
+btn.textContent="Mengirim...";
 
 try{
 
-let r=await addDoc(collection(db,"stories"),{
-topic:$("topic").value,
-admin:$("admin").value,
-message,
-userId,
-reply:"",
-status:"Menunggu",
-hasVoiceNote:!!voiceBlob,
-createdAt:serverTimestamp()
-});
+let r=
+await addDoc(
+collection(db,"stories"),
+{
 
-saveId(r.id);watch(r.id);
+topic:$("topic").value,
+
+admin:$("admin").value,
+
+message,
+
+userId,
+
+reply:"",
+
+status:"Menunggu",
+
+hasVoiceNote:!!voiceBlob,
+
+createdAt:serverTimestamp()
+
+}
+);
+
+saveId(r.id);
+
+watch(r.id);
+
+
+/* upload VN */
 
 if(voiceBlob){
+
 try{
+
 let storage=getStorage();
-let file=ref(storage,"voiceNotes/"+r.id+".webm");
-await uploadBytes(file,voiceBlob);
-let url=await getDownloadURL(file);
-await updateDoc(doc(db,"stories",r.id),{voiceNoteUrl:url});
-}catch(e){
-console.error("VN:",e);
+
+let file=
+ref(
+storage,
+"voiceNotes/"+r.id+".webm"
+);
+
+await uploadBytes(
+file,
+voiceBlob
+);
+
+let url=
+await getDownloadURL(file);
+
+await updateDoc(
+doc(db,"stories",r.id),
+{
+voiceNoteUrl:url
 }
+);
+
+}catch(e){
+
+console.error(
+"VN:",
+e
+);
+
 }
 
-$("codeValue").textContent=r.id.replace(/[^a-zA-Z0-9]/g,"").slice(0,8).toUpperCase();
+}
+
+
+/* kode cerita */
+
+$("codeValue").textContent=
+r.id
+.replace(/[^a-zA-Z0-9]/g,"")
+.slice(0,8)
+.toUpperCase();
+
 $("code").style.display="block";
+
 $("status").style.display="block";
-$("status").innerHTML="✅ Cerita berhasil dikirim secara anonim.<br>Ditujukan kepada <b>"+safe($("admin").value)+"</b>.";
+
+$("status").innerHTML=
+"✅ Cerita berhasil dikirim secara anonim.<br>"+
+"Ditujukan kepada <b>"+
+safe($("admin").value)+
+"</b>.";
 
 $("message").value="";
+
 voiceBlob=null;
+
 $("preview").style.display="none";
+
 $("preview").removeAttribute("src");
 
 }catch(e){
+
 console.error(e);
+
 $("status").style.display="block";
-$("status").innerHTML="❌ Cerita gagal dikirim.";
+
+$("status").innerHTML=
+"❌ Cerita gagal dikirim.";
+
 }
 
-btn.disabled=false;btn.textContent="Kirim Cerita";
+btn.disabled=false;
+btn.textContent="Kirim Cerita";
+
 };
 
+
+/* =========================
+   ANTI HTML INJECTION
+========================= */
+
 function safe(t){
-let d=document.createElement("div");
-d.textContent=String(t);
+
+let d=
+document.createElement("div");
+
+d.textContent=
+String(t);
+
 return d.innerHTML;
+
 }
 
 </script>
+
 </body>
 </html>
