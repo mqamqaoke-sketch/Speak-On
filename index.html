@@ -470,6 +470,41 @@ Simpan kode ini untuk mengecek balasan.
 </div>
 
 <div id="reply" class="reply"></div>
+<div class="card" style="margin-top:20px">
+  <h3>🔎 Cek Percakapan</h3>
+
+  <p class="small">
+    Masukkan kode cerita untuk melihat balasan admin.
+  </p>
+
+  <input
+    id="checkCode"
+    type="text"
+    placeholder="Contoh: SO-4827"
+    maxlength="7"
+    style="
+      width:100%;
+      padding:14px;
+      border:1px solid var(--line);
+      border-radius:13px;
+      background:#091116;
+      color:var(--text);
+      font:inherit;
+      outline:0;
+      text-transform:uppercase;
+    "
+  >
+
+  <button
+    id="checkStory"
+    class="send"
+    style="margin-top:10px"
+  >
+    💬 Buka Percakapan
+  </button>
+
+  <div id="conversation"></div>
+</div>
 
 </div>
 
@@ -1018,11 +1053,19 @@ e
 
 /* kode cerita */
 
-$("codeValue").textContent=
-r.id
-.replace(/[^a-zA-Z0-9]/g,"")
-.slice(0,8)
-.toUpperCase();
+const storyCode =
+"SO-" +
+Math.floor(1000 + Math.random() * 9000);
+
+await updateDoc(
+  doc(db,"stories",r.id),
+  {
+    storyCode: storyCode
+  }
+);
+
+$("codeValue").textContent = storyCode;
+$("code").style.display = "block";
 
 $("code").style.display="block";
 
@@ -1074,6 +1117,113 @@ String(t);
 return d.innerHTML;
 
 }
+
+$("checkStory").onclick = async () => {
+
+  const code =
+    $("checkCode").value.trim().toUpperCase();
+
+  if (!/^SO-\d{4}$/.test(code)) {
+    alert("Kode harus seperti SO-4827.");
+    return;
+  }
+
+  const stories =
+    JSON.parse(
+      localStorage.getItem("speakOnStoryIds") || "[]"
+    );
+
+  let found = null;
+
+  for (const id of stories) {
+
+    try {
+
+      const snap =
+        await new Promise(resolve => {
+
+          const unsubscribe =
+            onSnapshot(
+              doc(db, "stories", id),
+              s => {
+                unsubscribe();
+                resolve(s);
+              }
+            );
+
+        });
+
+      if (
+        snap.exists() &&
+        snap.data().storyCode === code
+      ) {
+        found = {
+          id: snap.id,
+          ...snap.data()
+        };
+        break;
+      }
+
+    } catch(e) {
+      console.error(e);
+    }
+
+  }
+
+  const box = $("conversation");
+
+  if (!found) {
+
+    box.innerHTML = `
+      <div class="status" style="display:block">
+        ❌ Cerita dengan kode tersebut tidak ditemukan
+        di perangkat ini.
+      </div>
+    `;
+
+    return;
+  }
+
+  const reply =
+    found.reply?.trim()
+      ? found.reply
+      : "Belum ada balasan dari admin.";
+
+  box.innerHTML = `
+    <div style="
+      margin-top:15px;
+      padding:16px;
+      border:1px solid var(--line);
+      border-radius:15px;
+      background:#091116;
+    ">
+
+      <div class="small">🔒 Percakapan anonim</div>
+
+      <div style="
+        margin-top:12px;
+        background:#102027;
+        padding:13px;
+        border-radius:12px;
+      ">
+        <b>🧑 Kamu</b><br><br>
+        ${safe(found.message || "")}
+      </div>
+
+      <div style="
+        margin-top:12px;
+        background:#102c24;
+        padding:13px;
+        border-radius:12px;
+      ">
+        <b>💬 ${safe(found.admin || "Admin")}</b><br><br>
+        ${safe(reply)}
+      </div>
+
+    </div>
+  `;
+
+};
 
 </script>
 
