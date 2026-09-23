@@ -546,19 +546,65 @@ Mendapat tanggapan manusia.
 
 <section id="public" style="display:none">
 
-<div class="card"
-style="text-align:center;padding:45px 20px">
+<div class="card">
 
-<div style="font-size:50px">
-🌐
-</div>
-
-<h2>Ruang Bersama</h2>
+<h2>🌐 Ruang Bersama</h2>
 
 <p class="small">
 Bagikan cerita secara anonim dan dapatkan dukungan dari pengguna lain.
+Cerita di sini dapat dibaca oleh pengguna lain.
 </p>
 
+<label>Kategori</label>
+
+<select id="publicTopic">
+<option>Masalah Pribadi</option>
+<option>Pertemanan</option>
+<option>Sekolah</option>
+<option>Aspirasi</option>
+<option>Lainnya</option>
+</select>
+
+<label>Ceritamu</label>
+
+<textarea
+id="publicMessage"
+placeholder="Bagikan ceritamu secara anonim..."
+></textarea>
+
+<button
+id="publicSend"
+class="send">
+🌐 Bagikan Cerita
+</button>
+
+<div
+id="publicStatus"
+class="status">
+</div>
+
+</div>
+
+
+<div
+class="card"
+style="margin-top:20px">
+
+<h3>📖 Cerita di Ruang Bersama</h3>
+
+<div
+id="publicList"
+style="margin-top:15px">
+
+<p class="small">
+Belum ada cerita.
+</p>
+
+</div>
+
+</div>
+
+</section>
 <p style="color:var(--cyan);font-weight:bold">
 SEGERA HADIR
 </p>
@@ -1222,6 +1268,59 @@ $("checkStory").onclick = async () => {
 
     </div>
   `;
+
+};
+
+// ===============================
+// RUANG BERSAMA - BAGIKAN CERITA
+// ===============================
+
+$("publicSend").onclick = async () => {
+
+  const topic = $("publicTopic").value;
+  const message = $("publicMessage").value.trim();
+
+  if (!message) {
+    $("publicStatus").textContent = "Tulis ceritamu terlebih dahulu.";
+    return;
+  }
+
+  if (message.length < 5) {
+    $("publicStatus").textContent = "Cerita terlalu singkat.";
+    return;
+  }
+
+  const button = $("publicSend");
+
+  button.disabled = true;
+  button.textContent = "Mengirim...";
+
+  try {
+
+    await addDoc(collection(db, "publicStories"), {
+      topic: topic,
+      message: message,
+      createdAt: serverTimestamp()
+    });
+
+    $("publicMessage").value = "";
+
+    $("publicStatus").textContent =
+      "✅ Ceritamu berhasil dibagikan secara anonim.";
+
+  } catch (error) {
+
+    console.error("Gagal mengirim cerita:", error);
+
+    $("publicStatus").textContent =
+      "❌ Cerita gagal dikirim. Coba lagi.";
+
+  } finally {
+
+    button.disabled = false;
+    button.textContent = "🌐 Bagikan Cerita";
+
+  }
 
 };
 
