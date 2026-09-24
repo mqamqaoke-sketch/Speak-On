@@ -657,10 +657,10 @@ new GoogleAuthProvider()
 
 }catch(e){
 
-console.error(e);
+console.error("LOGIN ERROR:", e);
 
-$("loginStatus").textContent=
-"Login gagal. Silakan coba lagi.";
+$("loginStatus").textContent =
+"Login gagal: " + (e.code || e.message);
 
 }
 
