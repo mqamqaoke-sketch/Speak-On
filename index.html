@@ -637,7 +637,9 @@ doc,
 onSnapshot,
 updateDoc,
 query,
-orderBy
+orderBy,
+where,
+getCountFormServer
 }
 from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -1327,7 +1329,7 @@ function loadPublicStories(){
     orderBy("createdAt", "desc")
   );
 
-  onSnapshot(q, snapshot => {
+  onSnapshot(q, async snapshot => {
 
     const list = $("publicList");
 
@@ -1337,41 +1339,136 @@ function loadPublicStories(){
       return;
     }
 
-    list.innerHTML = snapshot.docs.map(d => {
+    const cards = await Promise.all(
+      snapshot.docs.map(async d => {
 
-      const s = d.data();
+        const s = d.data();
 
-      return `
-        <div style="
-          background:#091116;
-          border:1px solid var(--line);
-          border-radius:15px;
-          padding:16px;
-          margin-bottom:12px;
-        ">
+        // Hitung reaksi
+        const loveRef = collection(
+          db,
+          "publicStories",
+          d.id,
+          "reactions"
+        );
 
+        const loveQuery = query(
+          loveRef,
+          where("type", "==", "love")
+        );
+
+        const supportQuery = query(
+          loveRef,
+          where("type", "==", "support")
+        );
+
+        const replyRef = collection(
+          db,
+          "publicStories",
+          d.id,
+          "replies"
+        );
+
+        const loveCount =
+          (await getCountFromServer(loveQuery)).data().count;
+
+        const supportCount =
+          (await getCountFromServer(supportQuery)).data().count;
+
+        const replyCount =
+          (await getCountFromServer(replyRef)).data().count;
+
+        return `
           <div style="
-            color:var(--cyan);
-            font-weight:bold;
+            background:#091116;
+            border:1px solid var(--line);
+            border-radius:15px;
+            padding:16px;
+            margin-bottom:12px;
           ">
-            🌐 ${safe(s.topic || "Lainnya")}
+
+            <div style="
+              color:var(--cyan);
+              font-weight:bold;
+            ">
+              🌐 ${safe(s.topic || "Lainnya")}
+            </div>
+
+            <div style="
+              margin-top:10px;
+              line-height:1.6;
+            ">
+              ${safe(s.message || "")}
+            </div>
+
+            <div class="small" style="margin-top:10px">
+              🕵️ Anonim
+            </div>
+
+            <div style="
+              display:flex;
+              gap:10px;
+              margin-top:14px;
+              flex-wrap:wrap;
+            ">
+
+              <button
+                class="reactionBtn"
+                data-id="${d.id}"
+                data-type="love"
+              >
+                ❤️ ${loveCount}
+              </button>
+
+              <button
+                class="reactionBtn"
+                data-id="${d.id}"
+                data-type="support"
+              >
+                🫂 ${supportCount}
+              </button>
+
+              <button
+                class="replyBtn"
+                data-id="${d.id}"
+              >
+                💬 ${replyCount}
+              </button>
+
+            </div>
+
+            <div
+              id="replyBox-${d.id}"
+              style="display:none;margin-top:14px"
+            >
+
+              <textarea
+                id="replyInput-${d.id}"
+                placeholder="Tulis tanggapanmu secara anonim..."
+                style="width:100%;min-height:80px"
+              ></textarea>
+
+              <button
+                class="sendReply"
+                data-id="${d.id}"
+                style="margin-top:8px"
+              >
+                💬 Kirim Tanggapan
+              </button>
+
+              <div class="small" style="margin-top:8px">
+                Tanggapan akan diperiksa sebelum tampil.
+              </div>
+
+            </div>
+
           </div>
+        `;
 
-          <div style="
-            margin-top:10px;
-            line-height:1.6;
-          ">
-            ${safe(s.message || "")}
-          </div>
+      })
+    );
 
-          <div class="small" style="margin-top:10px">
-            🕵️ Anonim
-          </div>
-
-        </div>
-      `;
-
-    }).join("");
+    list.innerHTML = cards.join("");
 
   }, error => {
 
@@ -1385,6 +1482,136 @@ function loadPublicStories(){
 }
 
 loadPublicStories();
+document.addEventListener("click", async e => {
+
+  const reactionBtn = e.target.closest(".reactionBtn");
+
+  if (reactionBtn) {
+
+    const storyId = reactionBtn.dataset.id;
+    const type = reactionBtn.dataset.type;
+
+    const key =
+      "speakOnReaction_" + storyId + "_" + type;
+
+    if (localStorage.getItem(key)) {
+      alert("Kamu sudah memberikan reaksi ini.");
+      return;
+    }
+
+    try {
+
+      await addDoc(
+        collection(
+          db,
+          "publicStories",
+          storyId,
+          "reactions"
+        ),
+        {
+          type: type,
+          createdAt: serverTimestamp()
+        }
+      );
+
+      localStorage.setItem(key, "1");
+
+    } catch (error) {
+
+      console.error("Reaction:", error);
+      alert("Reaksi gagal dikirim.");
+
+    }
+
+    return;
+  }
+
+
+  const replyBtn = e.target.closest(".replyBtn");
+
+  if (replyBtn) {
+
+    const id = replyBtn.dataset.id;
+
+    const box =
+      document.getElementById("replyBox-" + id);
+
+    if (box) {
+
+      box.style.display =
+        box.style.display === "none"
+        ? "block"
+        : "none";
+
+    }
+
+    return;
+  }
+
+
+  const sendReply = e.target.closest(".sendReply");
+
+  if (sendReply) {
+
+    const id = sendReply.dataset.id;
+
+    const input =
+      document.getElementById("replyInput-" + id);
+
+    const message = input.value.trim();
+
+    if (!message) {
+      alert("Tulis tanggapan terlebih dahulu.");
+      return;
+    }
+
+    if (message.length < 3) {
+      alert("Tanggapan terlalu singkat.");
+      return;
+    }
+
+    sendReply.disabled = true;
+    sendReply.textContent = "Mengirim...";
+
+    try {
+
+      await addDoc(
+        collection(
+          db,
+          "publicStories",
+          id,
+          "replies"
+        ),
+        {
+          message: message,
+          approved: false,
+          createdAt: serverTimestamp()
+        }
+      );
+
+      input.value = "";
+
+      alert(
+        "✅ Tanggapan dikirim dan menunggu pemeriksaan admin."
+      );
+
+    } catch (error) {
+
+      console.error("Reply:", error);
+
+      alert("❌ Tanggapan gagal dikirim.");
+
+    } finally {
+
+      sendReply.disabled = false;
+      sendReply.textContent =
+        "💬 Kirim Tanggapan";
+
+    }
+
+  }
+
+});
 
 </script>
 
