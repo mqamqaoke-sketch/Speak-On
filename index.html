@@ -604,12 +604,6 @@ Belum ada cerita.
 
 </div>
 
-</section>
-<p style="color:var(--cyan);font-weight:bold">
-SEGERA HADIR
-</p>
-
-</div>
 
 </section>
 
@@ -641,7 +635,9 @@ addDoc,
 serverTimestamp,
 doc,
 onSnapshot,
-updateDoc
+updateDoc,
+query,
+orderBy
 }
 from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
@@ -1323,6 +1319,72 @@ $("publicSend").onclick = async () => {
   }
 
 };
+
+function loadPublicStories(){
+
+  const q = query(
+    collection(db, "publicStories"),
+    orderBy("createdAt", "desc")
+  );
+
+  onSnapshot(q, snapshot => {
+
+    const list = $("publicList");
+
+    if(snapshot.empty){
+      list.innerHTML =
+        `<p class="small">Belum ada cerita.</p>`;
+      return;
+    }
+
+    list.innerHTML = snapshot.docs.map(d => {
+
+      const s = d.data();
+
+      return `
+        <div style="
+          background:#091116;
+          border:1px solid var(--line);
+          border-radius:15px;
+          padding:16px;
+          margin-bottom:12px;
+        ">
+
+          <div style="
+            color:var(--cyan);
+            font-weight:bold;
+          ">
+            🌐 ${safe(s.topic || "Lainnya")}
+          </div>
+
+          <div style="
+            margin-top:10px;
+            line-height:1.6;
+          ">
+            ${safe(s.message || "")}
+          </div>
+
+          <div class="small" style="margin-top:10px">
+            🕵️ Anonim
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+  }, error => {
+
+    console.error("Public stories:", error);
+
+    $("publicList").innerHTML =
+      `<p class="small">❌ Gagal memuat cerita publik.</p>`;
+
+  });
+
+}
+
+loadPublicStories();
 
 </script>
 
