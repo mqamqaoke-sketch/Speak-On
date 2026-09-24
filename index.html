@@ -625,6 +625,17 @@ Bercerita tanpa takut, mendengar tanpa menghakimi.
 
 import{app,db}from"./firebase.js"; 
 
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
+
+const SUPABASE_URL = "https://mrbvkxoglsebooqntfhi.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY = sb_publishable_Vb5o0FuJxL045ubRHO33TQ_tRrkeXNx;
+
+const supabase = createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+
 const $ = id => document.getElementById(id);
 
 import{getMessaging,getToken}from"https://www.gstatic.com/firebasejs/12.2.1/firebase-messaging.js";
@@ -643,13 +654,6 @@ getCountFromServer
 }
 from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-import{
-getStorage,
-ref,
-uploadBytes,
-getDownloadURL
-}
-from"https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
 
 const messaging = getMessaging(app);
 
@@ -1054,46 +1058,67 @@ saveId(r.id);
 watch(r.id);
 
 
-/* upload VN */
+/* upload VN ke Supabase */
 
 if(voiceBlob){
 
 try{
 
-let storage=getStorage();
+const filePath =
+"voiceNotes/" + r.id + ".webm";
 
-let file=
-ref(
-storage,
-"voiceNotes/"+r.id+".webm"
+const { error: uploadError } =
+await supabase.storage
+.from("voice-name")
+.upload(
+  filePath,
+  voiceBlob,
+  {
+    contentType:"audio/webm",
+    upsert:false
+  }
 );
 
-await uploadBytes(
-file,
-voiceBlob
-);
+if(uploadError){
 
-let url=
-await getDownloadURL(file);
+throw uploadError;
+
+}
+
+const { data } =
+supabase.storage
+.from("voice-name")
+.getPublicUrl(filePath);
+
+const voiceNoteUrl =
+data.publicUrl;
 
 await updateDoc(
 doc(db,"stories",r.id),
 {
-voiceNoteUrl:url
+voiceNoteUrl:voiceNoteUrl
 }
+);
+
+console.log(
+"VN berhasil diupload:",
+voiceNoteUrl
 );
 
 }catch(e){
 
 console.error(
-"VN:",
+"VN Supabase:",
 e
+);
+
+alert(
+"VN gagal dikirim. Cerita tetap tersimpan."
 );
 
 }
 
 }
-
 
 /* kode cerita */
 
