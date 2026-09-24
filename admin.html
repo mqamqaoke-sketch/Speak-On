@@ -1,3 +1,71 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -85,20 +153,35 @@ main{max-width:1150px;margin:auto;padding:30px 18px 60px}
 
 <div class="stats">
 <div class="stat"><div class="stat-title">Total Cerita</div><div id="totalStories" class="stat-value">0</div></div>
-<div class="stat"><div class="stat-title">Total Pengguna/div><div id="totalUsers" class="stat-value">0</div></div>
+<div class="stat"><div class="stat-title">Total Pengguna</div><div id="totalUsers" class="stat-value">0</div></div>
 <div class="stat"><div class="stat-title">Belum Dijawab</div><div id="unansweredStories" class="stat-value">0</div></div>
 <div class="stat"><div class="stat-title">Sudah Dibalas</div><div id="answeredStories" class="stat-value">0</div></div>
 </div>
 
 <h2 class="stories-title">Cerita Masuk</h2>
-<div id="storyList" class="story-list">
-<div class="empty">Memuat cerita...</div>
+<<hr style="border:0;border-top:1px solid #20343b;margin:35px 0">
+
+<h2 class="stories-title">🌐 Ruang Bersama</h2>
+
+<div id="publicAdminList" class="story-list">
+<div class="empty">Memuat cerita publik...</div>
 </div>
 </section>
 </main>
 
 <script type="module">
-import{collection,query,orderBy,onSnapshot,updateDoc,doc,arrayUnion}
+import{
+collection,
+query,
+orderBy,
+onSnapshot,
+updateDoc,
+doc,
+arrayUnion,
+deleteDoc,
+getDocs
+}
+
 from"https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 import{GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut}
@@ -178,6 +261,7 @@ area.classList.remove("hidden");
 
 sound();
 load();
+loadPublicAdmin();
 });
 
 function load(){
@@ -405,6 +489,316 @@ return String(x??"")
 .replace(/</g,"&lt;")
 .replace(/>/g,"&gt;");
 }
+
+// ===============================
+// RUANG BERSAMA - ADMIN
+// ===============================
+
+let publicUnsub=null;
+
+function loadPublicAdmin(){
+
+if(publicUnsub)publicUnsub();
+
+let q=query(
+collection(db,"publicStories"),
+orderBy("createdAt","desc")
+);
+
+publicUnsub=onSnapshot(q,async snap=>{
+
+let box=$("publicAdminList");
+
+if(!box)return;
+
+if(snap.empty){
+box.innerHTML='<div class="empty">Belum ada cerita publik.</div>';
+return;
+}
+
+box.innerHTML="";
+
+for(const storyDoc of snap.docs){
+
+let s=storyDoc.data();
+let storyId=storyDoc.id;
+
+let repliesSnap=await getDocs(
+collection(
+db,
+"publicStories",
+storyId,
+"replies"
+)
+);
+
+let repliesHTML="";
+
+repliesSnap.forEach(replyDoc=>{
+
+let r=replyDoc.data();
+
+repliesHTML+=`
+
+<div style="
+background:#081116;
+border:1px solid #20343b;
+border-radius:12px;
+padding:13px;
+margin-top:10px;
+">
+
+<div class="small">
+💬 Tanggapan anonim
+</div>
+
+<div style="
+margin-top:7px;
+line-height:1.5;
+word-break:break-word;
+">
+${esc(r.message||"")}
+</div>
+
+<div style="
+margin-top:10px;
+display:flex;
+gap:8px;
+flex-wrap:wrap;
+">
+
+${
+r.approved===true
+
+?`
+<span class="badge active">
+✅ Sudah tampil
+</span>
+`
+
+:`
+<button
+class="reply-btn approveReply"
+data-story="${attr(storyId)}"
+data-reply="${attr(replyDoc.id)}"
+>
+✅ Setujui
+</button>
+`
+}
+
+<button
+class="logout-btn deleteReply"
+data-story="${attr(storyId)}"
+data-reply="${attr(replyDoc.id)}"
+>
+🗑️ Hapus
+</button>
+
+</div>
+
+</div>
+`;
+
+});
+
+if(!repliesHTML){
+
+repliesHTML=`
+<div class="empty" style="margin-top:10px">
+Belum ada tanggapan.
+</div>
+`;
+
+}
+
+let card=document.createElement("div");
+
+card.className="story";
+
+card.innerHTML=`
+
+<div class="story-top">
+
+<div>
+
+<div class="topic">
+🌐 ${esc(s.topic||"Lainnya")}
+</div>
+
+</div>
+
+<div class="date">
+${date(s.createdAt)}
+</div>
+
+</div>
+
+<div class="story-meta">
+
+<span class="badge">
+👤 Anonim
+</span>
+
+</div>
+
+<div class="story-message">
+${esc(s.message||"")}
+</div>
+
+<div class="divider"></div>
+
+<div class="conversation-title">
+💬 Tanggapan Pengguna
+</div>
+
+${repliesHTML}
+
+<button
+class="logout-btn deletePublic"
+data-id="${attr(storyId)}"
+style="margin-top:15px"
+>
+🗑️ Hapus Cerita
+</button>
+
+`;
+
+box.appendChild(card);
+
+}
+
+},error=>{
+
+console.error("Public admin:",error);
+
+$("publicAdminList").innerHTML=`
+<div class="empty">
+❌ Gagal memuat Ruang Bersama.
+<br><br>
+${esc(error.message)}
+</div>
+`;
+
+});
+
+}
+
+
+// ===============================
+// TOMBOL MODERASI
+// ===============================
+
+document.addEventListener("click",async e=>{
+
+// SETUJUI TANGGAPAN
+
+let approve=e.target.closest(".approveReply");
+
+if(approve){
+
+let storyId=approve.dataset.story;
+let replyId=approve.dataset.reply;
+
+approve.disabled=true;
+approve.textContent="Memproses...";
+
+try{
+
+await updateDoc(
+doc(
+db,
+"publicStories",
+storyId,
+"replies",
+replyId
+),
+{
+approved:true
+}
+);
+
+}catch(error){
+
+console.error(error);
+
+alert("Gagal menyetujui tanggapan.");
+
+approve.disabled=false;
+approve.textContent="✅ Setujui";
+
+}
+
+return;
+
+}
+
+
+// HAPUS TANGGAPAN
+
+let deleteReplyBtn=
+e.target.closest(".deleteReply");
+
+if(deleteReplyBtn){
+
+if(!confirm("Hapus tanggapan ini?"))return;
+
+try{
+
+await deleteDoc(
+doc(
+db,
+"publicStories",
+deleteReplyBtn.dataset.story,
+"replies",
+deleteReplyBtn.dataset.reply
+)
+);
+
+}catch(error){
+
+console.error(error);
+
+alert("Gagal menghapus tanggapan.");
+
+}
+
+return;
+
+}
+
+
+// HAPUS CERITA PUBLIK
+
+let deleteStoryBtn=
+e.target.closest(".deletePublic");
+
+if(deleteStoryBtn){
+
+if(!confirm("Hapus cerita publik ini?"))return;
+
+try{
+
+await deleteDoc(
+doc(
+db,
+"publicStories",
+deleteStoryBtn.dataset.id
+)
+);
+
+}catch(error){
+
+console.error(error);
+
+alert("Gagal menghapus cerita.");
+
+}
+
+}
+
+});
+
 </script>
 
 </body>
